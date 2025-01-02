@@ -1,0 +1,90 @@
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #000;
+  color: #0f0;
+  font-family: "Courier New", Courier, monospace;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  overflow: hidden;
+}
+
+#intro {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  animation: fadeIn 1s ease-in-out;
+}
+
+#name {
+  font-size: 4rem; /* Increased font size */
+  margin: 0;
+}
+
+#designation {
+  font-size: 2rem; /* Increased font size */
+  margin: 10px 0;
+}
+
+#tagline {
+  font-size: 1.5rem; /* Increased font size */
+  margin: 20px 0;
+}
+
+#enter-note {
+  font-size: 1.2rem; /* Increased font size */
+  color: #555;
+}
+
+#console {
+  padding: 20px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  background-color: #000; /* Black background */
+  color: #0f0; /* Green text */
+}
+
+#output {
+  white-space: pre-wrap;
+  color: #0f0; /* Green text */
+}
+
+#input-line {
+  display: flex;
+  align-items: center;
+}
+
+#input-line span {
+  margin-right: 10px;
+}
+
+#command-input {
+  background: none;
+  border: none;
+  color: #0f0; /* Green text */
+  outline: none;
+  font-family: inherit;
+  font-size: 16px;
+  width: 100%;
+}
+
+#command-input::placeholder {
+  color: #555;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

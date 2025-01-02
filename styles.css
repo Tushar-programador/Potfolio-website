@@ -1,3 +1,4 @@
+/* General Body Styling */
 body {
   margin: 0;
   padding: 0;
@@ -11,6 +12,16 @@ body {
   overflow: hidden;
 }
 
+/* Main Container */
+#main-container {
+  display: flex;
+  width: 90%;
+  height: 90%;
+  border: 2px solid #0f0;
+  background-color: #000;
+}
+
+/* Intro Section */
 #intro {
   text-align: center;
   display: flex;
@@ -22,44 +33,50 @@ body {
 }
 
 #name {
-  font-size: 4rem; /* Increased font size */
+  font-size: 4rem;
   margin: 0;
 }
 
 #designation {
-  font-size: 2rem; /* Increased font size */
+  font-size: 2rem;
   margin: 10px 0;
 }
 
 #tagline {
-  font-size: 1.5rem; /* Increased font size */
+  font-size: 1.5rem;
   margin: 20px 0;
 }
 
 #enter-note {
-  font-size: 1.2rem; /* Increased font size */
+  font-size: 1.2rem;
   color: #555;
 }
 
+/* Console Section */
 #console {
+  flex: 1;
   padding: 20px;
-  width: 100%;
-  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  background-color: #000; /* Black background */
-  color: #0f0; /* Green text */
+  background-color: #000;
+  color: #0f0;
 }
 
 #output {
   white-space: pre-wrap;
-  color: #0f0; /* Green text */
+  color: #0f0;
+  height: 100%;
+  overflow-y: auto;
+  font-size: 1rem;
+  padding: 10px;
+  border-right: 2px solid #0f0;
 }
 
 #input-line {
   display: flex;
   align-items: center;
+  margin-top: 10px;
 }
 
 #input-line span {
@@ -69,22 +86,79 @@ body {
 #command-input {
   background: none;
   border: none;
-  color: #0f0; /* Green text */
+  color: #0f0;
   outline: none;
   font-family: inherit;
   font-size: 16px;
   width: 100%;
 }
 
-#command-input::placeholder {
-  color: #555;
+/* Project Cards */
+.project-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 16px;
+justify-content: space-around;
+border: 2px dotted wheat;
+padding: 1rem;
 }
 
+.project-card {
+  border: 1px solid #0f0;
+  padding: 16px;
+  width: 25%;
+  background-color: #111;
+  color: #0f0;
+  text-align: center;
+  transition: transform 0.2s;
+  cursor: pointer;
+  outline: none;
+}
+
+.project-card:hover,
+.project-card.focused {
+  transform: scale(1.01);
+  border-color: #4caf50;
+}
+
+.project-card:focus {
+  outline: 2px solid #4caf50;
+}
+
+/* Fade-in Animation */
 @keyframes fadeIn {
   from {
     opacity: 0;
   }
   to {
     opacity: 1;
+  }
+}
+
+/* Scrollbar Customization */
+#output::-webkit-scrollbar {
+  width: 8px;
+}
+
+#output::-webkit-scrollbar-thumb {
+  background: #00ff00;
+  border-radius: 5px;
+}
+
+#output::-webkit-scrollbar-track {
+  background: #222;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  #main-container {
+    flex-direction: column;
+  }
+
+  #console {
+    flex: 1;
+    border-right: none;
+    border-bottom: 2px solid #0f0;
   }
 }

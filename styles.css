@@ -19,6 +19,7 @@ body {
   height: 90%;
   border: 2px solid #0f0;
   background-color: #000;
+  display: none; /* Hide the main container by default */
 }
 
 /* Intro Section */

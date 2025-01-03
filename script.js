@@ -123,6 +123,21 @@ function appendOutputWithTyping(text, callback = null) {
     outputDiv.scrollTop = outputDiv.scrollHeight;
   }, 30);
 }
+document.addEventListener("DOMContentLoaded", () => {
+  const intro = document.getElementById("intro");
+  const mainContainer = document.getElementById("main-container");
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+      intro.style.opacity = "0"; // Fade out intro
+      setTimeout(() => {
+        intro.style.display = "none"; // Hide intro
+        mainContainer.style.display = "flex"; // Show main container
+        mainContainer.style.opacity = "1"; // Fade in main container
+      }, 500); // Match the transition duration
+    }
+  });
+});
 
 function handleCommand(command) {
   const cmd = command.toLowerCase().trim();

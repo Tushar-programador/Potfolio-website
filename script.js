@@ -27,57 +27,28 @@ const projectsData = [
     url: "https://github.com/username/payment-gateway",
   },
 ];
-// commands.resume = formatBox(
-//   "Resume",
-//   `
-// Downloading resume.pdf...
-// Progress: [                    ] 0%`
-// );
 
-// Add new functions for resume download simulation
-// function simulateDownload() {
-//   console.log("Simulating download");
-//   let progress = 0;
-//   const interval = setInterval(() => {
-//     progress += 5;
-//     const filled = "=".repeat(progress / 5);
-//     const empty = " ".repeat(20 - progress / 5);
-//     const progressBar = `Progress: [${filled}${empty}] ${progress}%`;
+function formatBox(title, content) {
+  const titleLength = 55;
+  return `
+╔${"═".repeat(titleLength)}╗
+║ ${title.toUpperCase().padEnd(titleLength - 2)} ║
+╠${"═".repeat(titleLength)}╣
+${content
+  .split("\n")
+  .map((line) => `║  ${line.padEnd(titleLength - 4)} ║`)
+  .join("\n")}
+╚${"═".repeat(titleLength)}╝`;
+}
 
-//     // Update just the progress line in the box
-//     const lines = outputDiv.innerHTML.split("\n");
-//     lines[lines.length - 2] = `║  ${progressBar.padEnd(46)} ║`;
-//     outputDiv.innerHTML = lines.join("\n");
-
-//     if (progress === 100) {
-//       clearInterval(interval);
-//       setTimeout(() => {
-//         // Trigger actual download
-//         console.log("Downloading resume...");
-//         const link = document.createElement("a");
-//         link.href = "/path/to/your/resume.pdf"; // Add your resume path here
-//         link.download = "tushar_kalra_resume.pdf";
-//         document.body.appendChild(link);
-//         link.click();
-//         document.body.removeChild(link);
-//       }, 500);
-//     }
-//   }, 100);
-// }
 function simulateDownload() {
   let progress = 0;
-  // First clear any existing progress
   const initialBox = formatBox(
     "Resume",
-    `
-Downloading resume.pdf...
-Progress: [                    ] 0%`
+    `Downloading resume.pdf...\nProgress: [                    ] 0%`
   );
-  outputDiv.innerHTML =
-    outputDiv.innerHTML.split("\n").slice(0, -1).join("\n") +
-    "\n" +
-    initialBox +
-    "\n";
+
+  outputDiv.innerHTML += initialBox + "\n";
 
   const interval = setInterval(() => {
     progress += 5;
@@ -86,7 +57,6 @@ Progress: [                    ] 0%`
     const progressText = `Downloading resume.pdf...\nProgress: [${filled}${empty}] ${progress}%`;
 
     const updatedBox = formatBox("Resume", progressText);
-    // Replace the last box in output
     outputDiv.innerHTML =
       outputDiv.innerHTML.split("\n").slice(0, -7).join("\n") +
       "\n" +
@@ -102,61 +72,9 @@ Progress: [                    ] 0%`
     }
   }, 100);
 }
-function formatBox(title, content) {
-  return `
-╔═══════════════════════════════════════════════════════════╗
-║ ${title.toUpperCase().padEnd(47)} ║
-╠═══════════════════════════════════════════════════════════╣
-${content
-  .split("\n")
-  .map((line) => `║  ${line.padEnd(46)} ║`)
-  .join("\n")}
-╚═══════════════════════════════════════════════════════════╝`;
-}
-
-const commands = {
-  help: formatBox(
-    "Help Menu",
-    `
-Available Commands:
-  about    - View my professional summary
-  skills   - List technical skills
-  projects - Browse my portfolio
-  clear    - Clear console
-  resume   - Download my resume
-  exit     - Close console`
-  ),
-
-  about: formatBox(
-    "About Me",
-    `
-Backend Developer specializing in Node.js
-• 3+ years building scalable applications
-• Expertise in API development
-• Focus on performance optimization
-• Passionate about clean code`
-  ),
-
-  skills: formatBox(
-    "Skills",
-    `
-Backend:    Node.js, Express, MongoDB
-Frontend:   HTML, CSS, JavaScript
-DevOps:     Docker, AWS, CI/CD
-Tools:      Git, VS Code, Postman
-Database:   MongoDB, PostgreSQL, Redis`
-  ),
-  resume: formatBox(
-    "Resume",
-    `
-Downloading resume.pdf...
-Progress: [                    ] 0%`
-  ),
-};
 
 function renderProjects() {
-  let output = `
-╔═══════════════════════════════════════════════════════════╗
+  let output = `\n╔═══════════════════════════════════════════════════════════╗
 ║                      MY PROJECTS                          ║
 ╠═══════════════════════════════════════════════════════════╣\n`;
 
@@ -169,8 +87,8 @@ function renderProjects() {
     }
   });
 
-  output += `╚═══════════════════════════════════════════════════════════╝\n`;
-  appendOutputWithTyping(output);
+  output += `╚═══════════════════════════════════════════════════════════╝\n\n`;
+  appendOutputWithTyping(output, suggestCommands);
 }
 
 function typeText(element, text, callback = null, speed = 50) {
@@ -196,8 +114,6 @@ function appendOutputWithTyping(text, callback = null) {
     if (lineIndex === lines.length) {
       clearInterval(interval);
       outputDiv.scrollTop = outputDiv.scrollHeight;
-      console.log(text);
-      console.log({ callback: callback });
       if (callback) callback();
       return;
     }
@@ -210,7 +126,7 @@ function appendOutputWithTyping(text, callback = null) {
 
 function handleCommand(command) {
   const cmd = command.toLowerCase().trim();
-  outputDiv.innerHTML += `\n> ${command}\n\n`;
+  outputDiv.innerHTML += `\n> ${command}\n`;
 
   if (cmd === "resume") {
     simulateDownload();
@@ -219,12 +135,12 @@ function handleCommand(command) {
   } else if (cmd === "projects") {
     renderProjects();
   } else if (cmd === "exit" || cmd === "quit") {
-    appendOutputWithTyping("\nGoodbye! Press F5 to restart.\n");
+    appendOutputWithTyping("\nGoodbye! Press F5 to restart.\n\n");
   } else if (commands[cmd]) {
     appendOutputWithTyping(commands[cmd]);
   } else {
     appendOutputWithTyping(
-      '\nCommand not found. Type "help" for available commands.\n'
+      '\nCommand not found. Type "help" for available commands.\n\n'
     );
   }
 }
@@ -255,31 +171,61 @@ inputField.addEventListener("keydown", (e) => {
   }
 });
 
-// Start intro sequence
-typeText(nameElement, "Tushar Kalra");
-setTimeout(
-  () => typeText(designationElement, "Backend Developer | Node.js Expert"),
-  1000
+// Commands
+const commands = {
+  help: formatBox(
+    "Help Menu",
+    `Available Commands:
+  about    - View my professional summary
+  skills   - List technical skills
+  projects - Browse my portfolio
+  clear    - Clear console
+  resume   - Download my resume
+  exit     - Close console`
+  ),
+  about: formatBox(
+    "About Me",
+    `Backend Developer specializing in Node.js
+• 3+ years building scalable applications
+• Expertise in API development
+• Focus on performance optimization
+• Passionate about clean code`
+  ),
+  skills: formatBox(
+    "Skills",
+    `Backend:    Node.js, Express, MongoDB
+Frontend:   HTML, CSS, JavaScript
+DevOps:     Docker, AWS, CI/CD
+Tools:      Git, VS Code, Postman
+Database:   MongoDB, PostgreSQL, Redis`
+  ),
+};
+
+commands.contact = formatBox(
+  "Contact",
+  `Email: tushar@example.com
+GitHub: github.com/username
+LinkedIn: linkedin.com/in/username`
 );
-setTimeout(
-  () => typeText(taglineElement, "Building scalable backend solutions"),
-  2000
+
+commands.socials = formatBox(
+  "Social Media",
+  `GitHub: github.com/username
+Twitter: twitter.com/username
+LinkedIn: linkedin.com/in/username`
 );
-setTimeout(() => typeText(enterNoteElement, "Press Enter to start"), 3000);
-// Automatically display the help menu after the intro
+
 window.addEventListener("load", () => {
   setTimeout(() => {
-    displayGreeting()
-    handleCommand("help"); // Automatically shows the help menu
-  }, 1000); // Wait a second before showing the help
+    displayGreeting();
+    handleCommand("help");
+  }, 1000);
 });
+
 function displayGreeting() {
   appendOutputWithTyping(`Welcome back! ${getGreeting()}\n`);
 }
 
-// setTimeout(displayGreeting, 2000); // Show greeting after intro
-
-// Greeting based on the time of day
 function getGreeting() {
   const hours = new Date().getHours();
   if (hours < 12) return "Good Morning!";
@@ -287,64 +233,10 @@ function getGreeting() {
   return "Good Evening!";
 }
 
-
-// Suggesting commands after showing help
 function suggestCommands() {
   appendOutputWithTyping(
     `\nDid you know? You can type 'projects' to see my portfolio or 'resume' to download my resume.\n`
   );
 }
 
-setTimeout(suggestCommands, 3000); // Suggest commands after help menu
-
-// Simulate system logs (terminal activity)
-function simulateSystemCheck() {
-  // Initializing system check
-  appendOutputWithTyping("\n[System] Initializing system check...\n");
-
-  let progress = 0;
-  const interval = setInterval(() => {
-    progress += 30; // Increase by 10% per step
-
-    // Generate progress bar
-    const filled = "=".repeat(progress / 5); // 20 chars max for a 100% bar
-    const empty = " ".repeat(20 - progress / 5); // Remaining empty space
-    const progressText = `Progress: [${filled}${empty}] ${progress}%`;
-
-    appendOutputWithTyping(`\n[System] ${progressText}`, () => {
-      // After 100% progress, show completion message
-      if (progress === 100) {
-        clearInterval(interval);
-        appendOutputWithTyping("\n[System] System check complete.\n");
-      }
-    });
-  }, 500); // 500ms interval for progress updates (you can adjust the speed)
-}
-
-// simulateSystemCheck(); // Start simulating logs
-
-// New commands for contact and social media
-commands.contact = formatBox(
-  "Contact",
-  `
-Email: tushar@example.com
-GitHub: github.com/username
-LinkedIn: linkedin.com/in/username`
-);
-
-commands.socials = formatBox(
-  "Social Media",
-  `
-GitHub: github.com/username
-Twitter: twitter.com/username
-LinkedIn: linkedin.com/in/username`
-);
-
-// Ask user to engage with the project after viewing it
-function askForProjectInterest() {
-  appendOutputWithTyping(
-    `\nWould you like to know more about any of my projects? Type the project number (1, 2, 3) or type 'exit' to leave.\n`
-  );
-}
-
-setTimeout(askForProjectInterest, 4000);
+setTimeout(suggestCommands, 3000);

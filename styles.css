@@ -14,12 +14,6 @@ body {
 .project-card:hover {
   border-color: var(--hover-color);
 }
-.project-card:hover,
-.project-card.focused {
-  transform: scale(1.05);
-  border-color: #4caf50;
-  box-shadow: 0 4px 8px rgba(0, 255, 0, 0.3);
-}
 
 /* General Body Styling */
 
@@ -172,6 +166,9 @@ padding: 1rem;
   border-radius: 5px;
 }
 
+.mobile-only {
+  display: none;
+}
 #output::-webkit-scrollbar-track {
   background: #222;
 }
@@ -189,4 +186,8 @@ padding: 1rem;
     border-right: none;
     border-bottom: 2px solid #0f0;
   }
+   .mobile-only {
+    display: block; /* Visible only on small screens */
+  }
 }
+

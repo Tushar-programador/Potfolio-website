@@ -64,7 +64,7 @@ const projectsData = [
       "File sharing",
       "User presence",
     ],
-    status: "Live",
+    status: "Not Deployed",
   },
   {
     title: "DNS Server",
@@ -77,20 +77,20 @@ const projectsData = [
       "Load balancing",
       "Security features",
     ],
-    status: "In Development",
+    status: "Completed",
   },
   {
-    title: "Payment Gateway",
-    description: "Crypto payment processor with multiple chain support",
-    tech: "Node.js, Web3, Express",
+    title: "KeepAnEye",
+    description: "Website uptime monitoring tool",
+    tech: "Node.js,  Express, MongoDB",
     url: "https://github.com/username/payment-gateway",
     features: [
-      "Multi-chain support",
-      "Auto conversion",
-      "Transaction tracking",
-      "Security audit passed",
+      "Multi-user support",
+      "Uptime reports",
+      "Alerts & notifications",
+      "API for integrations",
     ],
-    status: "Beta",
+    status: "In Development",
   },
 ];
 
@@ -141,29 +141,28 @@ function setupMatrixRain() {
   const columns = canvas.width / fontSize;
   const drops = Array(Math.floor(columns)).fill(1);
 
-function draw() {
-  ctx.fillStyle = "rgba(0, 0, 0, 0.1)"; // Background with slight transparency
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  function draw() {
+    ctx.fillStyle = "rgba(0, 0, 0, 0.1)"; // Background with slight transparency
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-  const colorKeys = Object.keys(COLORS); // Get color names from the COLORS object
+    const colorKeys = Object.keys(COLORS); // Get color names from the COLORS object
 
-  ctx.font = fontSize + "px monospace";
+    ctx.font = fontSize + "px monospace";
 
-  for (let i = 0; i < drops.length; i++) {
-    const text = chars[Math.floor(Math.random() * chars.length)]; // Random character
-    const randomColor =
-      COLORS[colorKeys[Math.floor(Math.random() * colorKeys.length)]]; // Random color
-    ctx.fillStyle = randomColor; // Set random color
-    ctx.fillText(text, i * fontSize, drops[i] * fontSize); // Draw the character
+    for (let i = 0; i < drops.length; i++) {
+      const text = chars[Math.floor(Math.random() * chars.length)]; // Random character
+      const randomColor =
+        COLORS[colorKeys[Math.floor(Math.random() * colorKeys.length)]]; // Random color
+      ctx.fillStyle = randomColor; // Set random color
+      ctx.fillText(text, i * fontSize, drops[i] * fontSize); // Draw the character
 
-    // Reset drop to the top of the canvas with some randomness
-    if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-      drops[i] = 0;
+      // Reset drop to the top of the canvas with some randomness
+      if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+        drops[i] = 0;
+      }
+      drops[i]++;
     }
-    drops[i]++;
   }
-}
-
 
   let animationId;
   function animate() {
@@ -262,22 +261,16 @@ exit     - Close console`
     `${ASCII_COMPUTER}
 
 Backend Developer specializing in Node.js
-• 3+ years building scalable applications
+• building scalable applications
 • Expertise in API development
 • Focus on performance optimization
 • Passionate about clean code`
   ),
-  skills: formatBox(
-    "Skills",
-    `Backend:  Node.js, Express, MongoDB
-Frontend: HTML, CSS, JavaScript, React
-DevOps:   Docker, AWS, CI/CD, Git`
-  ),
   contact: formatBox(
     "Contact",
-    `Email:    tushar@example.com
-GitHub:   github.com/username
-LinkedIn: linkedin.com/in/username`
+    `Email:  tusharkalra307@gmail.com
+GitHub:   https://github.com/Tushar-programador
+LinkedIn: https://www.linkedin.com/in/tushar-kalra-developer/`
   ),
   experience: async () => {
     await showExperience();
@@ -339,12 +332,37 @@ async function handleCommand(command) {
   const cmd = command.toLowerCase().trim();
   outputDiv.innerHTML += `\n> ${command}\n`;
 
+  const style = document.createElement("style");
+  style.textContent = `
+    .selected-project {
+      color: #0f0;
+      font-weight: bold;
+    }
+    .project-status {
+      color: #0af;
+      font-style: italic;
+      }
+      .project-nav {
+        color: #ff0;
+        margin-top: 10px;
+        }
+        `;
+  // Add styles
+  document.head.appendChild(style);
+
   switch (cmd) {
     case "clear":
       outputDiv.innerHTML = "";
       break;
     case "experince":
       await showExperience();
+      break;
+    case "skills":
+      console.log(1);
+      currentSkillCategoryIndex = 0;
+      await appendOutputWithTyping("Loading interactive skills viewer...\n");
+      outputDiv.innerHTML = showSkillCategories();
+      document.addEventListener("keydown", handleSkillNavigation);
       break;
     case "projects":
       currentProjectIndex = 0;
@@ -373,7 +391,6 @@ async function handleCommand(command) {
       }
       isMatrixRunning = !isMatrixRunning;
       break;
-
     case "resume":
       await appendOutputWithTyping("Downloading resume...\n");
       // Add resume download logic here
@@ -433,24 +450,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }, 1000);
 });
 
-// Add styles
-const style = document.createElement("style");
-style.textContent = `
-  .selected-project {
-    color: #0f0;
-    font-weight: bold;
-  }
-  .project-status {
-    color: #0af;
-    font-style: italic;
-  }
-  .project-nav {
-    color: #ff0;
-    margin-top: 10px;
-  }
-`;
-document.head.appendChild(style);
-
 const EXPERIENCE_ASCII = `
     ⚡ EXPERIENCE ⚡    
      ______________     
@@ -468,27 +467,27 @@ const EXPERIENCE_ASCII = `
 // Add experience data
 const experienceData = [
   {
-    company: "TechCorp Solutions",
-    role: "Senior Backend Developer",
-    period: "2022 - Present",
-    highlights: [
-      "Led team of 5 developers on microservices architecture",
-      "Reduced API response time by 40%",
-      "Implemented CI/CD pipeline reducing deployment time by 60%",
-      "Mentored 3 junior developers",
-    ],
-  },
-  {
-    company: "DataFlow Systems",
+    company: "Learn Kro Education",
     role: "Backend Developer",
-    period: "2020 - 2022",
+    period: "2024 - Present",
     highlights: [
-      "Developed REST APIs serving 1M+ daily requests",
-      "Optimized database queries reducing load by 30%",
-      "Implemented real-time notification system",
-      "Led migration from monolith to microservices",
+      "Led team of 3 developers on microservices architecture",
+      "Create a scalable backend system ",
+      "Developed a Monitoring system for the application",
+      "Implement automated Excel data transfer system",
     ],
   },
+  // {
+  //   company: "DataFlow Systems",
+  //   role: "Backend Developer",
+  //   period: "2020 - 2022",
+  //   highlights: [
+  //     "Developed REST APIs serving 1M+ daily requests",
+  //     "Optimized database queries reducing load by 30%",
+  //     "Implemented real-time notification system",
+  //     "Led migration from monolith to microservices",
+  //   ],
+  // },
 ];
 
 // Add new animations
@@ -585,3 +584,68 @@ ${exp.highlights.map((h) => `• ${h}`).join("\n")}`
 commands.experience = async () => {
   await showExperience();
 };
+// Skills Data
+const skillsData = {
+  Backend: ["Node.js", "Express", "MongoDB", "Redis", "Socket.io"],
+  Frontend: ["HTML", "CSS", "JavaScript", "React", "Tailwind CSS"],
+  DevOps: ["Docker", "CI/CD", "Git", "Nginx"],
+  Tools: ["Postman", "VS Code", "GitHub", "Webpack"],
+};
+
+// Skill Navigation State
+let currentSkillCategoryIndex = 0;
+
+// Function to Display Skill Categories
+function showSkillCategories() {
+  const categories = Object.keys(skillsData);
+  let output = `\nSelect a category to view skills:\n\n`;
+
+  categories.forEach((category, index) => {
+    const isSelected = index === currentSkillCategoryIndex;
+    output += `${isSelected ? ">" : " "} ${category}\n`;
+  });
+
+  output += `\n[←/→] Navigate Categories  [Enter] View Skills  [Q]uit Skills View`;
+  return output;
+}
+
+// Function to Display Skills in Selected Category
+function showSkillsInCategory(category) {
+  const skills = skillsData[category];
+  return formatBox(
+    category,
+    `Skills:\n${skills.map((skill) => `• ${skill}`).join("\n")}`
+  );
+}
+
+// Skill Navigation Handler
+function handleSkillNavigation(e) {
+  const categories = Object.keys(skillsData);
+  let needsUpdate = true;
+
+  switch (e.key.toLowerCase()) {
+    case "arrowleft":
+      if (currentSkillCategoryIndex > 0) currentSkillCategoryIndex--;
+      break;
+    case "arrowright":
+      if (currentSkillCategoryIndex < categories.length - 1)
+        currentSkillCategoryIndex++;
+      break;
+    case "enter":
+      const selectedCategory = categories[currentSkillCategoryIndex];
+      outputDiv.innerHTML = showSkillsInCategory(selectedCategory);
+      return;
+    case "q":
+      document.removeEventListener("keydown", handleSkillNavigation);
+      appendOutputWithTyping(
+        '\nExited skills view. Type "help" for commands.\n'
+      );
+      return;
+    default:
+      needsUpdate = false;
+  }
+
+  if (needsUpdate) {
+    outputDiv.innerHTML = showSkillCategories();
+  }
+}

@@ -1,4 +1,28 @@
+:root {
+  --bg-color: #000;
+  --text-color: #0f0;
+  --hover-color: #4caf50;
+  --font-family: "Courier New", Courier, monospace;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-family: var(--font-family);
+}
+
+.project-card:hover {
+  border-color: var(--hover-color);
+}
+.project-card:hover,
+.project-card.focused {
+  transform: scale(1.05);
+  border-color: #4caf50;
+  box-shadow: 0 4px 8px rgba(0, 255, 0, 0.3);
+}
+
 /* General Body Styling */
+
 body {
   margin: 0;
   padding: 0;
@@ -50,8 +74,9 @@ body {
 
 #enter-note {
   font-size: 1.2rem;
-  color: #555;
+  color: #888;
 }
+
 
 /* Console Section */
 #console {
@@ -124,7 +149,7 @@ padding: 1rem;
 }
 
 .project-card:focus {
-  outline: 2px solid #4caf50;
+  outline: 2px solid #e13f1a;
 }
 
 /* Fade-in Animation */
@@ -156,7 +181,9 @@ padding: 1rem;
   #main-container {
     flex-direction: column;
   }
-
+ .project-card {
+    width: 100%; /* Stack cards on smaller screens */
+  }
   #console {
     flex: 1;
     border-right: none;

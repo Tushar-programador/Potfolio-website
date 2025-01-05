@@ -1,12 +1,108 @@
-// DOM Elements
-const introDiv = document.getElementById("intro");
-const mainContainer = document.getElementById("main-container");
-const consoleDiv = document.getElementById("console");
-const outputDiv = document.getElementById("output");
-const inputField = document.getElementById("command-input");
+const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+console.log(isMobile);
+if (isMobile) {
+  // Wait for DOM content to load
+  document.addEventListener("DOMContentLoaded", () => {
+    const introSection = document.getElementById("intro");
+    const mainContainer = document.getElementById("main-container");
+    const consoleElement = document.getElementById("console");
+    const enterButton = document.getElementById("enter-button");
+    const commandInput = document.getElementById("command-input");
+    const outputElement = document.getElementById("output");
+    const mobileButton = document.getElementById("mobile-button");
 
-// ASCII Art Constants
-const ASCII_LOGO = `
+    // Utility function to write output in the console
+    const writeOutput = (text) => {
+      const newLine = document.createElement("div");
+      newLine.textContent = text;
+      outputElement.appendChild(newLine);
+      outputElement.scrollTop = outputElement.scrollHeight; // Auto-scroll to the bottom
+    };
+
+    // Function to handle Enter button click (common for both)
+    const enterSite = () => {
+      introSection.style.display = "none"; // Hide intro section
+      mainContainer.style.display = "flex"; // Show main container
+      consoleElement.style.display = "flex"; // Show console
+      commandInput.style.display = "block"; // Display command input
+      commandInput.focus(); // Set focus on input
+      writeOutput(
+        "Welcome to the portfolio console! Type 'help' for a list of commands."
+      );
+    };
+
+    // Function to handle user commands (common for both)
+    const handleCommand = (command) => {
+      switch (command.toLowerCase()) {
+        case "help":
+          writeOutput(
+            "Available commands: 'about', 'projects', 'contact', 'clear'"
+          );
+          break;
+        case "about":
+          writeOutput(
+            "About me: I am Tushar Kalra, a passionate web developer!"
+          );
+          break;
+        case "projects":
+          writeOutput("Projects: Coming soon! Stay tuned.");
+          break;
+        case "contact":
+          writeOutput("Contact: Email me at tushar.kalra@example.com");
+          break;
+        case "clear":
+          outputElement.innerHTML = ""; // Clear all output
+          break;
+        default:
+          writeOutput(
+            `Unknown command: '${command}'. Type 'help' for a list of commands.`
+          );
+      }
+    };
+    mobileButton.addEventListener("click", () => {
+      if (introSection.style.display !== "none") {
+        enterSite();
+      }
+    });
+    mobileCode();
+
+    // Mobile-Specific Code
+    const mobileCode = () => {
+      // Show the mobile button and add click functionality
+      mobileButton.style.display = "block"; // Ensure button is visible
+      mobileButton.addEventListener("click", () => {
+        const commands = [
+          "help - List available commands",
+          "about - About me",
+          "projects - My projects",
+          "contact - Contact information",
+          "clear - Clear the console",
+        ];
+
+        const commandList = document.createElement("div");
+        commandList.style.padding = "10px";
+        commandList.style.background = "#111";
+        commandList.style.border = "1px solid #0f0";
+        commandList.style.marginTop = "10px";
+
+        commandList.innerHTML = commands.map((cmd) => `<p>${cmd}</p>`).join("");
+        outputElement.appendChild(commandList);
+        outputElement.scrollTop = outputElement.scrollHeight; // Auto-scroll to the bottom
+      });
+    };
+  });
+
+  // Run mobile-specific code
+} else {
+  // DOM Elements
+  const introDiv = document.getElementById("intro");
+  const mainContainer = document.getElementById("main-container");
+  const consoleDiv = document.getElementById("console");
+  const outputDiv = document.getElementById("output");
+  const inputField = document.getElementById("command-input");
+
+  // ASCII Art Constants
+  const ASCII_LOGO = `
      _____           _                _  __     _           
     |_   _|   _ ___| |__   __ _ _ __| |/ /__ _| |_ __ __ _ 
       | || | | / __| '_ \\ / _\` | '__| ' // _\` | | '__/ _\` |
@@ -14,7 +110,7 @@ const ASCII_LOGO = `
       |_| \\__,_|___/_| |_|\\__,_|_|  |_|\\_\\__,_|_|_|  \\__,_|
 `;
 
-const ASCII_COMPUTER = `
+  const ASCII_COMPUTER = `
        ,----------------,              ,---------,
        |----|     |----|              |===========|
        |    |     |    |              | Learn     |
@@ -25,7 +121,7 @@ const ASCII_COMPUTER = `
             '-----'      PLANET!                
 `;
 
-const PROJECT_ASCII = `
+  const PROJECT_ASCII = `
     /\\____/\\    
    /  o  o  \\    PROJECT
   ( ==  ^  == )   SHOWCASE
@@ -35,216 +131,216 @@ const PROJECT_ASCII = `
 (__|__|__|__|__)  
 `;
 
-const MATRIX_ASCII = `
+  const MATRIX_ASCII = `
  01001101 01000001 01010100 01010010 
  01001001 01011000 00100000 01010010 
  01000001 01001001 01001110 00100000 
 `;
 
-// Colors for styling
-const COLORS = {
-  green: "#0f0",
-  blue: "#0af",
-  yellow: "#ff0",
-  pink: "#f0f",
-  cyan: "#0ff",
-  orange: "#fa0",
-};
+  // Colors for styling
+  const COLORS = {
+    green: "#0f0",
+    blue: "#0af",
+    yellow: "#ff0",
+    pink: "#f0f",
+    cyan: "#0ff",
+    orange: "#fa0",
+  };
 
-// Project data
-const projectsData = [
-  {
-    title: "Chat Realm",
-    description: "Real-time chat application with end-to-end encryption",
-    tech: "Node.js, Socket.io, MongoDB",
-    url: "https://github.com/username/chat-realm",
-    features: [
-      "End-to-end encryption",
-      "Real-time messaging",
-      "File sharing",
-      "User presence",
-    ],
-    status: "Not Deployed",
-  },
-  {
-    title: "DNS Server",
-    description: "Custom DNS implementation with caching",
-    tech: "Node.js, UDP, DNS Protocol",
-    url: "https://github.com/username/dns-server",
-    features: [
-      "DNS caching",
-      "Custom record types",
-      "Load balancing",
-      "Security features",
-    ],
-    status: "Completed",
-  },
-  {
-    title: "KeepAnEye",
-    description: "Website uptime monitoring tool",
-    tech: "Node.js,  Express, MongoDB",
-    url: "https://github.com/username/payment-gateway",
-    features: [
-      "Multi-user support",
-      "Uptime reports",
-      "Alerts & notifications",
-      "API for integrations",
-    ],
-    status: "In Development",
-  },
-];
+  // Project data
+  const projectsData = [
+    {
+      title: "Chat Realm",
+      description: "Real-time chat application with end-to-end encryption",
+      tech: "Node.js, Socket.io, MongoDB",
+      url: "https://github.com/username/chat-realm",
+      features: [
+        "End-to-end encryption",
+        "Real-time messaging",
+        "File sharing",
+        "User presence",
+      ],
+      status: "Not Deployed",
+    },
+    {
+      title: "DNS Server",
+      description: "Custom DNS implementation with caching",
+      tech: "Node.js, UDP, DNS Protocol",
+      url: "https://github.com/username/dns-server",
+      features: [
+        "DNS caching",
+        "Custom record types",
+        "Load balancing",
+        "Security features",
+      ],
+      status: "Completed",
+    },
+    {
+      title: "KeepAnEye",
+      description: "Website uptime monitoring tool",
+      tech: "Node.js,  Express, MongoDB",
+      url: "https://github.com/username/payment-gateway",
+      features: [
+        "Multi-user support",
+        "Uptime reports",
+        "Alerts & notifications",
+        "API for integrations",
+      ],
+      status: "In Development",
+    },
+  ];
 
-// State management
-let matrixAnimation = null;
-let isMatrixRunning = false;
-let currentProjectIndex = 0;
-let currentView = "overview";
+  // State management
+  let matrixAnimation = null;
+  let isMatrixRunning = false;
+  let currentProjectIndex = 0;
+  let currentView = "overview";
 
-// Utility function to create formatted boxes
-function formatBox(title, content) {
-  const titleLength = 55;
-  const lines = content.split("\n");
-  return `
+  // Utility function to create formatted boxes
+  function formatBox(title, content) {
+    const titleLength = 55;
+    const lines = content.split("\n");
+    return `
 ╔${"═".repeat(titleLength)}╗
 ║ ${title.toUpperCase().padEnd(titleLength - 2)} ║
 ╠${"═".repeat(titleLength)}╣
 ${lines.map((line) => `║  ${line.padEnd(titleLength - 4)} ║`).join("\n")}
 ╚${"═".repeat(titleLength)}╝`;
-}
-
-// Matrix rain animation setup
-function setupMatrixRain() {
-  const canvas = document.createElement("canvas");
-  const ctx = canvas.getContext("2d");
-
-  canvas.style.position = "fixed";
-  canvas.style.top = "0";
-  canvas.style.left = "0";
-  canvas.style.width = "100%";
-  canvas.style.height = "100%";
-  canvas.style.zIndex = "-1";
-  canvas.style.opacity = "0.8";
-  canvas.id = "matrix-canvas";
-
-  document.body.appendChild(canvas);
-
-  function resize() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
   }
 
-  resize();
-  window.addEventListener("resize", resize);
+  // Matrix rain animation setup
+  function setupMatrixRain() {
+    const canvas = document.createElement("canvas");
+    const ctx = canvas.getContext("2d");
 
-  const chars = "01";
-  const fontSize = 14;
-  const columns = canvas.width / fontSize;
-  const drops = Array(Math.floor(columns)).fill(1);
+    canvas.style.position = "fixed";
+    canvas.style.top = "0";
+    canvas.style.left = "0";
+    canvas.style.width = "100%";
+    canvas.style.height = "100%";
+    canvas.style.zIndex = "-1";
+    canvas.style.opacity = "0.8";
+    canvas.id = "matrix-canvas";
 
-  function draw() {
-    ctx.fillStyle = "rgba(0, 0, 0, 0.1)"; // Background with slight transparency
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    document.body.appendChild(canvas);
 
-    const colorKeys = Object.keys(COLORS); // Get color names from the COLORS object
-
-    ctx.font = fontSize + "px monospace";
-
-    for (let i = 0; i < drops.length; i++) {
-      const text = chars[Math.floor(Math.random() * chars.length)]; // Random character
-      const randomColor =
-        COLORS[colorKeys[Math.floor(Math.random() * colorKeys.length)]]; // Random color
-      ctx.fillStyle = randomColor; // Set random color
-      ctx.fillText(text, i * fontSize, drops[i] * fontSize); // Draw the character
-
-      // Reset drop to the top of the canvas with some randomness
-      if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-        drops[i] = 0;
-      }
-      drops[i]++;
+    function resize() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
     }
+
+    resize();
+    window.addEventListener("resize", resize);
+
+    const chars = "01";
+    const fontSize = 14;
+    const columns = canvas.width / fontSize;
+    const drops = Array(Math.floor(columns)).fill(1);
+
+    function draw() {
+      ctx.fillStyle = "rgba(0, 0, 0, 0.1)"; // Background with slight transparency
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      const colorKeys = Object.keys(COLORS); // Get color names from the COLORS object
+
+      ctx.font = fontSize + "px monospace";
+
+      for (let i = 0; i < drops.length; i++) {
+        const text = chars[Math.floor(Math.random() * chars.length)]; // Random character
+        const randomColor =
+          COLORS[colorKeys[Math.floor(Math.random() * colorKeys.length)]]; // Random color
+        ctx.fillStyle = randomColor; // Set random color
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize); // Draw the character
+
+        // Reset drop to the top of the canvas with some randomness
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+          drops[i] = 0;
+        }
+        drops[i]++;
+      }
+    }
+
+    let animationId;
+    function animate() {
+      draw();
+      animationId = requestAnimationFrame(animate);
+    }
+
+    return {
+      start: () => {
+        canvas.style.display = "block";
+        animate();
+      },
+      stop: () => {
+        canvas.style.display = "none";
+        cancelAnimationFrame(animationId);
+      },
+    };
   }
 
-  let animationId;
-  function animate() {
-    draw();
-    animationId = requestAnimationFrame(animate);
-  }
-
-  return {
-    start: () => {
-      canvas.style.display = "block";
-      animate();
-    },
-    stop: () => {
-      canvas.style.display = "none";
-      cancelAnimationFrame(animationId);
-    },
-  };
-}
-
-// Project display functions
-function createProjectMenu() {
-  return `
+  // Project display functions
+  function createProjectMenu() {
+    return `
 ╭${"─".repeat(50)}╮
 │ [←/→] Navigate Projects  [↑/↓] Change View  [Enter] Select │
 │ [B]ack to Overview      [Q]uit Project View               │
 ╰${"─".repeat(50)}╯`;
-}
+  }
 
-function showProjectOverview() {
-  const total = projectsData.length;
-  let output = `\n${PROJECT_ASCII}\n`;
-  output += `\nShowing Project ${currentProjectIndex + 1} of ${total}\n\n`;
+  function showProjectOverview() {
+    const total = projectsData.length;
+    let output = `\n${PROJECT_ASCII}\n`;
+    output += `\nShowing Project ${currentProjectIndex + 1} of ${total}\n\n`;
 
-  projectsData.forEach((project, index) => {
-    const isSelected = index === currentProjectIndex;
-    output += `${isSelected ? ">" : " "} ${project.title} [${
-      project.status
-    }]\n`;
-  });
+    projectsData.forEach((project, index) => {
+      const isSelected = index === currentProjectIndex;
+      output += `${isSelected ? ">" : " "} ${project.title} [${
+        project.status
+      }]\n`;
+    });
 
-  return output;
-}
+    return output;
+  }
 
-function showProjectDetails(project) {
-  return formatBox(
-    project.title,
-    `Status: ${project.status}
+  function showProjectDetails(project) {
+    return formatBox(
+      project.title,
+      `Status: ${project.status}
 Description: ${project.description}
 Tech Stack: ${project.tech}
 URL: ${project.url}
 
 Features:
 ${project.features.map((f) => `• ${f}`).join("\n")}`
-  );
-}
+    );
+  }
 
-// Typing animation function
-function appendOutputWithTyping(text, speed = 30) {
-  return new Promise((resolve) => {
-    const lines = text.split("\n");
-    let lineIndex = 0;
+  // Typing animation function
+  function appendOutputWithTyping(text, speed = 30) {
+    return new Promise((resolve) => {
+      const lines = text.split("\n");
+      let lineIndex = 0;
 
-    const interval = setInterval(() => {
-      if (lineIndex === lines.length) {
-        clearInterval(interval);
+      const interval = setInterval(() => {
+        if (lineIndex === lines.length) {
+          clearInterval(interval);
+          outputDiv.scrollTop = outputDiv.scrollHeight;
+          resolve();
+          return;
+        }
+
+        outputDiv.innerHTML += lines[lineIndex] + "\n";
+        lineIndex++;
         outputDiv.scrollTop = outputDiv.scrollHeight;
-        resolve();
-        return;
-      }
+      }, speed);
+    });
+  }
 
-      outputDiv.innerHTML += lines[lineIndex] + "\n";
-      lineIndex++;
-      outputDiv.scrollTop = outputDiv.scrollHeight;
-    }, speed);
-  });
-}
-
-// Command definitions
-const commands = {
-  help: formatBox(
-    "Help Menu",
-    `Available Commands:
+  // Command definitions
+  const commands = {
+    help: formatBox(
+      "Help Menu",
+      `Available Commands:
 about    - View my professional summary
 skills   - List technical skills
 projects - Browse my portfolio
@@ -255,85 +351,86 @@ contact  - Show contact information
 resume   - Download my resume
 experience - View my work history
 exit     - Close console`
-  ),
-  about: formatBox(
-    "About Me",
-    `${ASCII_COMPUTER}
+    ),
+    about: formatBox(
+      "About Me",
+      `${ASCII_COMPUTER}
 
 Backend Developer specializing in Node.js
 • building scalable applications
 • Expertise in API development
 • Focus on performance optimization
 • Passionate about clean code`
-  ),
-  contact: formatBox(
-    "Contact",
-    `Email:  tusharkalra307@gmail.com
+    ),
+    contact: formatBox(
+      "Contact",
+      `Email:  tusharkalra307@gmail.com
 GitHub:   https://github.com/Tushar-programador
 LinkedIn: https://www.linkedin.com/in/tushar-kalra-developer/`
-  ),
-  experience: async () => {
-    await showExperience();
-  },
-};
+    ),
+    experience: async () => {
+      await showExperience();
+    },
+  };
 
-// Project navigation handler
-function handleProjectNavigation(e) {
-  let needsUpdate = true;
+  // Project navigation handler
+  function handleProjectNavigation(e) {
+    let needsUpdate = true;
 
-  switch (e.key.toLowerCase()) {
-    case "arrowleft":
-      if (currentProjectIndex > 0) currentProjectIndex--;
-      break;
-    case "arrowright":
-      if (currentProjectIndex < projectsData.length - 1) currentProjectIndex++;
-      break;
-    case "arrowup":
-    case "arrowdown":
-      currentView = currentView === "overview" ? "details" : "overview";
-      break;
-    case "b":
-      currentView = "overview";
-      break;
-    case "q":
-      document.removeEventListener("keydown", handleProjectNavigation);
-      appendOutputWithTyping(
-        '\nExited project view. Type "help" for commands.\n'
-      );
-      return false;
-    default:
-      needsUpdate = false;
+    switch (e.key.toLowerCase()) {
+      case "arrowleft":
+        if (currentProjectIndex > 0) currentProjectIndex--;
+        break;
+      case "arrowright":
+        if (currentProjectIndex < projectsData.length - 1)
+          currentProjectIndex++;
+        break;
+      case "arrowup":
+      case "arrowdown":
+        currentView = currentView === "overview" ? "details" : "overview";
+        break;
+      case "b":
+        currentView = "overview";
+        break;
+      case "q":
+        document.removeEventListener("keydown", handleProjectNavigation);
+        appendOutputWithTyping(
+          '\nExited project view. Type "help" for commands.\n'
+        );
+        return false;
+      default:
+        needsUpdate = false;
+    }
+
+    if (needsUpdate) {
+      updateProjectDisplay();
+    }
+    return true;
   }
 
-  if (needsUpdate) {
-    updateProjectDisplay();
+  // Project display update
+  async function updateProjectDisplay() {
+    let output = "";
+
+    if (currentView === "overview") {
+      output = showProjectOverview();
+    } else {
+      output = showProjectDetails(projectsData[currentProjectIndex]);
+    }
+
+    output += "\n" + createProjectMenu();
+
+    outputDiv.innerHTML = "";
+    await appendOutputWithTyping(output);
   }
-  return true;
-}
 
-// Project display update
-async function updateProjectDisplay() {
-  let output = "";
+  // Command handler
+  async function handleCommand(command) {
+    const cmd = command.toLowerCase().trim();
+    outputDiv.innerHTML += `\n> ${command}\n`;
 
-  if (currentView === "overview") {
-    output = showProjectOverview();
-  } else {
-    output = showProjectDetails(projectsData[currentProjectIndex]);
-  }
-
-  output += "\n" + createProjectMenu();
-
-  outputDiv.innerHTML = "";
-  await appendOutputWithTyping(output);
-}
-
-// Command handler
-async function handleCommand(command) {
-  const cmd = command.toLowerCase().trim();
-  outputDiv.innerHTML += `\n> ${command}\n`;
-
-  const style = document.createElement("style");
-  style.textContent = `
+    const style = document.createElement("style");
+    style.textContent = `
     .selected-project {
       color: #0f0;
       font-weight: bold;
@@ -347,110 +444,110 @@ async function handleCommand(command) {
         margin-top: 10px;
         }
         `;
-  // Add styles
-  document.head.appendChild(style);
+    // Add styles
+    document.head.appendChild(style);
 
-  switch (cmd) {
-    case "clear":
-      outputDiv.innerHTML = "";
-      break;
-    case "experince":
-      await showExperience();
-      break;
-    case "skills":
-      console.log(1);
-      currentSkillCategoryIndex = 0;
-      await appendOutputWithTyping("Loading interactive skills viewer...\n");
-      outputDiv.innerHTML = showSkillCategories();
-      document.addEventListener("keydown", handleSkillNavigation);
-      break;
-    case "projects":
-      currentProjectIndex = 0;
-      currentView = "overview";
-      await appendOutputWithTyping("Loading project viewer...\n");
-      await updateProjectDisplay();
-      document.addEventListener("keydown", handleProjectNavigation);
-      break;
-    case "ascii":
-      await appendOutputWithTyping(
-        `${ASCII_LOGO}\n${ASCII_COMPUTER}\n${PROJECT_ASCII}\n${MATRIX_ASCII}`
-      );
-      break;
-    case "matrix":
-      if (!matrixAnimation) {
-        matrixAnimation = setupMatrixRain();
-      }
-      if (isMatrixRunning) {
-        matrixAnimation.stop();
-        await appendOutputWithTyping("Matrix rain effect stopped!\n");
-      } else {
-        matrixAnimation.start();
+    switch (cmd) {
+      case "clear":
+        outputDiv.innerHTML = "";
+        break;
+      case "experince":
+        await showExperience();
+        break;
+      case "skills":
+        console.log(1);
+        currentSkillCategoryIndex = 0;
+        await appendOutputWithTyping("Loading interactive skills viewer...\n");
+        outputDiv.innerHTML = showSkillCategories();
+        document.addEventListener("keydown", handleSkillNavigation);
+        break;
+      case "projects":
+        currentProjectIndex = 0;
+        currentView = "overview";
+        await appendOutputWithTyping("Loading project viewer...\n");
+        await updateProjectDisplay();
+        document.addEventListener("keydown", handleProjectNavigation);
+        break;
+      case "ascii":
         await appendOutputWithTyping(
-          'Matrix rain effect started! Type "matrix" again to stop.\n'
+          `${ASCII_LOGO}\n${ASCII_COMPUTER}\n${PROJECT_ASCII}\n${MATRIX_ASCII}`
         );
-      }
-      isMatrixRunning = !isMatrixRunning;
-      break;
-    case "resume":
-      await appendOutputWithTyping("Downloading resume...\n");
-      // Add resume download logic here
-      break;
-    case "experience":
-      await showExperience();
-      break;
-    case "exit":
-    case "quit":
-      await appendOutputWithTyping("Goodbye! Press F5 to restart.\n");
-      break;
+        break;
+      case "matrix":
+        if (!matrixAnimation) {
+          matrixAnimation = setupMatrixRain();
+        }
+        if (isMatrixRunning) {
+          matrixAnimation.stop();
+          await appendOutputWithTyping("Matrix rain effect stopped!\n");
+        } else {
+          matrixAnimation.start();
+          await appendOutputWithTyping(
+            'Matrix rain effect started! Type "matrix" again to stop.\n'
+          );
+        }
+        isMatrixRunning = !isMatrixRunning;
+        break;
+      case "resume":
+        await appendOutputWithTyping("Downloading resume...\n");
+        // Add resume download logic here
+        break;
+      case "experience":
+        await showExperience();
+        break;
+      case "exit":
+      case "quit":
+        await appendOutputWithTyping("Goodbye! Press F5 to restart.\n");
+        break;
 
-    default:
-      if (commands[cmd]) {
-        await appendOutputWithTyping(commands[cmd]);
-      } else {
-        await appendOutputWithTyping(
-          '\nCommand not found. Type "help" for available commands.\n'
-        );
-      }
+      default:
+        if (commands[cmd]) {
+          await appendOutputWithTyping(commands[cmd]);
+        } else {
+          await appendOutputWithTyping(
+            '\nCommand not found. Type "help" for available commands.\n'
+          );
+        }
+    }
   }
-}
 
-// Event Listeners
-document.addEventListener("DOMContentLoaded", () => {
-  // Handle intro screen
-  document.addEventListener("keydown", async (event) => {
-    if (event.key === "Enter" && introDiv.style.display !== "none") {
-      introDiv.style.opacity = "0";
-      setTimeout(async () => {
-        introDiv.style.display = "none";
-        mainContainer.style.display = "flex";
-        consoleDiv.style.display = "flex";
-        inputField.style.display = "inline";
-        inputField.focus();
-        await appendOutputWithTyping(
-          `${ASCII_LOGO}\n\nWelcome to my portfolio! Type "help" to see available commands.\n`
-        );
-      }, 500);
-    }
+  // Event Listeners
+  document.addEventListener("DOMContentLoaded", () => {
+    // Handle intro screen
+    document.addEventListener("keydown", async (event) => {
+      if (event.key === "Enter" && introDiv.style.display !== "none") {
+        introDiv.style.opacity = "0";
+        setTimeout(async () => {
+          introDiv.style.display = "none";
+          mainContainer.style.display = "flex";
+          consoleDiv.style.display = "flex";
+          inputField.style.display = "inline";
+          inputField.focus();
+          await appendOutputWithTyping(
+            `${ASCII_LOGO}\n\nWelcome to my portfolio! Type "help" to see available commands.\n`
+          );
+        }, 500);
+      }
+    });
+
+    // Handle command input
+    inputField.addEventListener("keydown", async (e) => {
+      if (e.key === "Enter") {
+        const command = inputField.value;
+        inputField.value = "";
+        await handleCommand(command);
+      }
+    });
+
+    // Initial greeting
+    setTimeout(async () => {
+      await appendOutputWithTyping(
+        `Welcome to my portfolio!\nPress Enter to start.\n`
+      );
+    }, 1000);
   });
 
-  // Handle command input
-  inputField.addEventListener("keydown", async (e) => {
-    if (e.key === "Enter") {
-      const command = inputField.value;
-      inputField.value = "";
-      await handleCommand(command);
-    }
-  });
-
-  // Initial greeting
-  setTimeout(async () => {
-    await appendOutputWithTyping(
-      `Welcome to my portfolio!\nPress Enter to start.\n`
-    );
-  }, 1000);
-});
-
-const EXPERIENCE_ASCII = `
+  const EXPERIENCE_ASCII = `
     ⚡ EXPERIENCE ⚡    
      ______________     
     /             /|   
@@ -464,188 +561,190 @@ const EXPERIENCE_ASCII = `
   |___________|/       
 `;
 
-// Add experience data
-const experienceData = [
-  {
-    company: "Learn Kro Education",
-    role: "Backend Developer",
-    period: "2024 - Present",
-    highlights: [
-      "Led team of 3 developers on microservices architecture",
-      "Create a scalable backend system ",
-      "Developed a Monitoring system for the application",
-      "Implement automated Excel data transfer system",
-    ],
-  },
-  // {
-  //   company: "DataFlow Systems",
-  //   role: "Backend Developer",
-  //   period: "2020 - 2022",
-  //   highlights: [
-  //     "Developed REST APIs serving 1M+ daily requests",
-  //     "Optimized database queries reducing load by 30%",
-  //     "Implemented real-time notification system",
-  //     "Led migration from monolith to microservices",
-  //   ],
-  // },
-];
+  // Add experience data
+  const experienceData = [
+    {
+      company: "Learn Kro Education",
+      role: "Backend Developer",
+      period: "2024 - Present",
+      highlights: [
+        "Led team of 3 developers on microservices architecture",
+        "Create a scalable backend system ",
+        "Developed a Monitoring system for the application",
+        "Implement automated Excel data transfer system",
+      ],
+    },
+    // {
+    //   company: "DataFlow Systems",
+    //   role: "Backend Developer",
+    //   period: "2020 - 2022",
+    //   highlights: [
+    //     "Developed REST APIs serving 1M+ daily requests",
+    //     "Optimized database queries reducing load by 30%",
+    //     "Implemented real-time notification system",
+    //     "Led migration from monolith to microservices",
+    //   ],
+    // },
+  ];
 
-// Add new animations
-function typewriterEffect(element, text, speed = 50) {
-  let i = 0;
-  return new Promise((resolve) => {
-    const timer = setInterval(() => {
-      if (i < text.length) {
-        element.innerHTML += text.charAt(i);
-        i++;
-      } else {
-        clearInterval(timer);
-        resolve();
-      }
-    }, speed);
-  });
-}
-
-function glitchText(text, iterations = 3) {
-  const glitchChars = "!@#$%^&*<>-_";
-  let result = text;
-
-  for (let i = 0; i < iterations; i++) {
-    const pos = Math.floor(Math.random() * text.length);
-    const glitchChar =
-      glitchChars[Math.floor(Math.random() * glitchChars.length)];
-    result = result.substring(0, pos) + glitchChar + result.substring(pos + 1);
+  // Add new animations
+  function typewriterEffect(element, text, speed = 50) {
+    let i = 0;
+    return new Promise((resolve) => {
+      const timer = setInterval(() => {
+        if (i < text.length) {
+          element.innerHTML += text.charAt(i);
+          i++;
+        } else {
+          clearInterval(timer);
+          resolve();
+        }
+      }, speed);
+    });
   }
 
-  return result;
-}
+  function glitchText(text, iterations = 3) {
+    const glitchChars = "!@#$%^&*<>-_";
+    let result = text;
 
-async function glitchAnimation(element, finalText, duration = 1000) {
-  const steps = 10;
-  const stepDuration = duration / steps;
-
-  for (let i = 0; i < steps; i++) {
-    element.textContent = glitchText(finalText);
-    await new Promise((resolve) => setTimeout(resolve, stepDuration));
-  }
-
-  element.textContent = finalText;
-}
-
-// Add slide-in animation for boxes
-function slideInBox(content) {
-  const lines = content.split("\n");
-  return new Promise(async (resolve) => {
-    for (const line of lines) {
-      await appendOutputWithTyping(
-        "| " + line + " ".repeat(50 - line.length) + "|\n",
-        30
-      );
+    for (let i = 0; i < iterations; i++) {
+      const pos = Math.floor(Math.random() * text.length);
+      const glitchChar =
+        glitchChars[Math.floor(Math.random() * glitchChars.length)];
+      result =
+        result.substring(0, pos) + glitchChar + result.substring(pos + 1);
     }
-    resolve();
-  });
-}
 
-// Enhance formatBox with animation
-async function animatedBox(title, content) {
-  const titleLength = 55;
-  await appendOutputWithTyping(`╔${"═".repeat(titleLength)}╗\n`);
-  await appendOutputWithTyping(
-    `║ ${title.toUpperCase().padEnd(titleLength - 2)} ║\n`
-  );
-  await appendOutputWithTyping(`╠${"═".repeat(titleLength)}╣\n`);
-
-  const lines = content.split("\n");
-  for (const line of lines) {
-    await appendOutputWithTyping(`║  ${line.padEnd(titleLength - 4)} ║\n`);
+    return result;
   }
 
-  await appendOutputWithTyping(`╚${"═".repeat(titleLength)}╝\n`);
-}
+  async function glitchAnimation(element, finalText, duration = 1000) {
+    const steps = 10;
+    const stepDuration = duration / steps;
 
-// Add experience command handler
-async function showExperience() {
-  await appendOutputWithTyping(EXPERIENCE_ASCII + "\n");
+    for (let i = 0; i < steps; i++) {
+      element.textContent = glitchText(finalText);
+      await new Promise((resolve) => setTimeout(resolve, stepDuration));
+    }
 
-  for (const exp of experienceData) {
-    await animatedBox(
-      exp.company,
-      `Role: ${exp.role}
+    element.textContent = finalText;
+  }
+
+  // Add slide-in animation for boxes
+  function slideInBox(content) {
+    const lines = content.split("\n");
+    return new Promise(async (resolve) => {
+      for (const line of lines) {
+        await appendOutputWithTyping(
+          "| " + line + " ".repeat(50 - line.length) + "|\n",
+          30
+        );
+      }
+      resolve();
+    });
+  }
+
+  // Enhance formatBox with animation
+  async function animatedBox(title, content) {
+    const titleLength = 55;
+    await appendOutputWithTyping(`╔${"═".repeat(titleLength)}╗\n`);
+    await appendOutputWithTyping(
+      `║ ${title.toUpperCase().padEnd(titleLength - 2)} ║\n`
+    );
+    await appendOutputWithTyping(`╠${"═".repeat(titleLength)}╣\n`);
+
+    const lines = content.split("\n");
+    for (const line of lines) {
+      await appendOutputWithTyping(`║  ${line.padEnd(titleLength - 4)} ║\n`);
+    }
+
+    await appendOutputWithTyping(`╚${"═".repeat(titleLength)}╝\n`);
+  }
+
+  // Add experience command handler
+  async function showExperience() {
+    await appendOutputWithTyping(EXPERIENCE_ASCII + "\n");
+
+    for (const exp of experienceData) {
+      await animatedBox(
+        exp.company,
+        `Role: ${exp.role}
 Period: ${exp.period}
 
 Key Achievements:
 ${exp.highlights.map((h) => `• ${h}`).join("\n")}`
-    );
-    await new Promise((resolve) => setTimeout(resolve, 500)); // Pause between experiences
-  }
-}
-
-// Update commands object
-commands.experience = async () => {
-  await showExperience();
-};
-// Skills Data
-const skillsData = {
-  Backend: ["Node.js", "Express", "MongoDB", "Redis", "Socket.io"],
-  Frontend: ["HTML", "CSS", "JavaScript", "React", "Tailwind CSS"],
-  DevOps: ["Docker", "CI/CD", "Git", "Nginx"],
-  Tools: ["Postman", "VS Code", "GitHub", "Webpack"],
-};
-
-// Skill Navigation State
-let currentSkillCategoryIndex = 0;
-
-// Function to Display Skill Categories
-function showSkillCategories() {
-  const categories = Object.keys(skillsData);
-  let output = `\nSelect a category to view skills:\n\n`;
-
-  categories.forEach((category, index) => {
-    const isSelected = index === currentSkillCategoryIndex;
-    output += `${isSelected ? ">" : " "} ${category}\n`;
-  });
-
-  output += `\n[←/→] Navigate Categories  [Enter] View Skills  [Q]uit Skills View`;
-  return output;
-}
-
-// Function to Display Skills in Selected Category
-function showSkillsInCategory(category) {
-  const skills = skillsData[category];
-  return formatBox(
-    category,
-    `Skills:\n${skills.map((skill) => `• ${skill}`).join("\n")}`
-  );
-}
-
-// Skill Navigation Handler
-function handleSkillNavigation(e) {
-  const categories = Object.keys(skillsData);
-  let needsUpdate = true;
-
-  switch (e.key.toLowerCase()) {
-    case "arrowleft":
-      if (currentSkillCategoryIndex > 0) currentSkillCategoryIndex--;
-      break;
-    case "arrowright":
-      if (currentSkillCategoryIndex < categories.length - 1)
-        currentSkillCategoryIndex++;
-      break;
-    case "enter":
-      const selectedCategory = categories[currentSkillCategoryIndex];
-      outputDiv.innerHTML = showSkillsInCategory(selectedCategory);
-      return;
-    case "q":
-      document.removeEventListener("keydown", handleSkillNavigation);
-      appendOutputWithTyping(
-        '\nExited skills view. Type "help" for commands.\n'
       );
-      return;
-    default:
-      needsUpdate = false;
+      await new Promise((resolve) => setTimeout(resolve, 500)); // Pause between experiences
+    }
   }
 
-  if (needsUpdate) {
-    outputDiv.innerHTML = showSkillCategories();
+  // Update commands object
+  commands.experience = async () => {
+    await showExperience();
+  };
+  // Skills Data
+  const skillsData = {
+    Backend: ["Node.js", "Express", "MongoDB", "Redis", "Socket.io"],
+    Frontend: ["HTML", "CSS", "JavaScript", "React", "Tailwind CSS"],
+    DevOps: ["Docker", "CI/CD", "Git", "Nginx"],
+    Tools: ["Postman", "VS Code", "GitHub", "Webpack"],
+  };
+
+  // Skill Navigation State
+  let currentSkillCategoryIndex = 0;
+
+  // Function to Display Skill Categories
+  function showSkillCategories() {
+    const categories = Object.keys(skillsData);
+    let output = `\nSelect a category to view skills:\n\n`;
+
+    categories.forEach((category, index) => {
+      const isSelected = index === currentSkillCategoryIndex;
+      output += `${isSelected ? ">" : " "} ${category}\n`;
+    });
+
+    output += `\n[←/→] Navigate Categories  [Enter] View Skills  [Q]uit Skills View`;
+    return output;
+  }
+
+  // Function to Display Skills in Selected Category
+  function showSkillsInCategory(category) {
+    const skills = skillsData[category];
+    return formatBox(
+      category,
+      `Skills:\n${skills.map((skill) => `• ${skill}`).join("\n")}`
+    );
+  }
+
+  // Skill Navigation Handler
+  function handleSkillNavigation(e) {
+    const categories = Object.keys(skillsData);
+    let needsUpdate = true;
+
+    switch (e.key.toLowerCase()) {
+      case "arrowleft":
+        if (currentSkillCategoryIndex > 0) currentSkillCategoryIndex--;
+        break;
+      case "arrowright":
+        if (currentSkillCategoryIndex < categories.length - 1)
+          currentSkillCategoryIndex++;
+        break;
+      case "enter":
+        const selectedCategory = categories[currentSkillCategoryIndex];
+        outputDiv.innerHTML = showSkillsInCategory(selectedCategory);
+        return;
+      case "q":
+        document.removeEventListener("keydown", handleSkillNavigation);
+        appendOutputWithTyping(
+          '\nExited skills view. Type "help" for commands.\n'
+        );
+        return;
+      default:
+        needsUpdate = false;
+    }
+
+    if (needsUpdate) {
+      outputDiv.innerHTML = showSkillCategories();
+    }
   }
 }

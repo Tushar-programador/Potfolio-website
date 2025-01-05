@@ -102,6 +102,7 @@ if (isMobile) {
   const inputField = document.getElementById("command-input");
 
   // ASCII Art Constants
+  
   const ASCII_LOGO = `
      _____           _                _  __     _           
     |_   _|   _ ___| |__   __ _ _ __| |/ /__ _| |_ __ __ _ 

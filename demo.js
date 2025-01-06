@@ -1,8 +1,6 @@
 const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 console.log(isMobile);
 if (isMobile) {
-  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-
   document.addEventListener("DOMContentLoaded", () => {
     const introSection = document.getElementById("intro");
     const mainContainer = document.getElementById("main-container");
@@ -27,7 +25,7 @@ if (isMobile) {
       outputElement.style.maxHeight = "70vh";
 
       // Improve input experience
-      commandInput.style.fontSize = "16px"; // Prevent zoom on iOS
+      commandInput.style.fontSize = "16px"; 
       commandInput.style.width = "calc(100% - 70px)";
     }
     function handleCommand(command) {
@@ -344,8 +342,6 @@ if (isMobile) {
       }
     });
 
-    // Initialize
-    initializeMobileUI();
   });
 } else {
   // DOM Elements

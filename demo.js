@@ -1,8 +1,6 @@
 const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 console.log(isMobile);
 if (isMobile) {
-  // Wait for DOM content to load
-  // Mobile device detection
   const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
   document.addEventListener("DOMContentLoaded", () => {
@@ -275,6 +273,7 @@ if (isMobile) {
         { title: "Chat Realm", description: "Real-time chat application" },
         { title: "DNS Server", description: "Custom DNS implementation" },
         { title: "KeepAnEye", description: "Website monitoring tool" },
+        { title: "Twitter Backend", description: "Twitter Backend clone" },
       ];
 
       const projectList = document.createElement("div");
@@ -294,40 +293,36 @@ if (isMobile) {
       outputElement.scrollTop = outputElement.scrollHeight;
     }
 
-  
-      const skillsList = document.createElement("div");
-      skillsList.className = "mobile-skills-list";
+    const skillsList = document.createElement("div");
+    skillsList.className = "mobile-skills-list";
 
-      Object.entries(skills).forEach(([category, items]) => {
-        skillsList.innerHTML += `
+    Object.entries(skills).forEach(([category, items]) => {
+      skillsList.innerHTML += `
           <div class="skill-category">
             <h3>${category}</h3>
             <p>${items.join(", ")}</p>
           </div>
         `;
-      });
+    });
 
-      outputElement.appendChild(skillsList);
-      outputElement.scrollTop = outputElement.scrollHeight;
-    
+    outputElement.appendChild(skillsList);
+    outputElement.scrollTop = outputElement.scrollHeight;
 
+    const expList = document.createElement("div");
+    expList.className = "mobile-experience-list";
 
-      const expList = document.createElement("div");
-      expList.className = "mobile-experience-list";
-
-      experience.forEach((exp) => {
-        expList.innerHTML += `
+    experience.forEach((exp) => {
+      expList.innerHTML += `
           <div class="experience-item">
             <h3>${exp.role} at ${exp.company}</h3>
             <p>${exp.period}</p>
             <p>${exp.description}</p>
           </div>
         `;
-      });
+    });
 
-      outputElement.appendChild(expList);
-      outputElement.scrollTop = outputElement.scrollHeight;
-    
+    outputElement.appendChild(expList);
+    outputElement.scrollTop = outputElement.scrollHeight;
 
     // Event listeners
     mobileButton.addEventListener("click", () => {

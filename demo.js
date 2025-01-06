@@ -2,112 +2,195 @@ const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 console.log(isMobile);
 if (isMobile) {
   // Wait for DOM content to load
-  document.addEventListener("DOMContentLoaded", () => {
-    const introSection = document.getElementById("intro");
-    const mainContainer = document.getElementById("main-container");
-    const consoleElement = document.getElementById("console");
-    const commandInput = document.getElementById("command-input");
-    const outputElement = document.getElementById("output");
-    const mobileButton = document.getElementById("mobile-button");
-    const sendButton = document.getElementById("send-button");
+  // Mobile device detection
+  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
-    sendButton.addEventListener("click", () => {
-      const command = commandInput.value.trim();
-      if (command) {
-        handleCommand(command);
-        commandInput.value = ""; // Clear input after sending
-      }
-    });
-    // Utility function to write output in the console
-    const writeOutput = (text) => {
-      const newLine = document.createElement("div");
-      newLine.textContent = text;
-      outputElement.appendChild(newLine);
-      outputElement.scrollTop = outputElement.scrollHeight; // Auto-scroll to the bottom
-    };
+  
+    document.addEventListener("DOMContentLoaded", () => {
+      const introSection = document.getElementById("intro");
+      const mainContainer = document.getElementById("main-container");
+      const consoleElement = document.getElementById("console");
+      const commandInput = document.getElementById("command-input");
+      const outputElement = document.getElementById("output");
+      const mobileButton = document.getElementById("mobile-button");
+      const sendButton = document.getElementById("send-button");
 
-    // Function to handle Enter button click (common for both)
-    const enterSite = () => {
-      introSection.style.display = "none"; // Hide intro section
-      mainContainer.style.display = "flex"; // Show main container
-      consoleElement.style.display = "flex"; // Show console
-      commandInput.style.display = "block"; // Display command input
-      commandInput.focus(); // Set focus on input
-      writeOutput(
-        "Welcome to the portfolio console! Type 'help' for a list of commands."
-      );
-    };
-    sendButton.addEventListener("click", () => {
-      const command = commandInput.value.trim();
-      if (command) {
-        handleCommand(command);
-        commandInput.value = ""; // Clear input after sending
-      }
-    });
-    mobileCode();
+      // Initialize mobile UI
+      function initializeMobileUI() {
+        mobileButton.style.display = "block";
+        sendButton.style.display = "block";
 
-    // Function to handle user commands (common for both)
-    const handleCommand = (command) => {
-      switch (command.toLowerCase()) {
-        case "help":
-          writeOutput(
-            "Available commands: 'about', 'projects', 'contact', 'clear'"
-          );
-          break;
-        case "about":
-          writeOutput(
-            "About me: I am Tushar Kalra, a passionate web developer!"
-          );
-          break;
-        case "projects":
-          writeOutput("Projects: Coming soon! Stay tuned.");
-          break;
-        case "contact":
-          writeOutput("Contact: Email me at tushar.kalra@example.com");
-          break;
-        case "clear":
-          outputElement.innerHTML = ""; // Clear all output
-          break;
-        default:
-          writeOutput(
-            `Unknown command: '${command}'. Type 'help' for a list of commands.`
-          );
-      }
-    };
-    mobileButton.addEventListener("click", () => {
-      if (introSection.style.display !== "none") {
-        enterSite();
-      }
-    });
+        // Adjust layout for mobile
+        mainContainer.style.width = "100%";
+        mainContainer.style.height = "100%";
+        mainContainer.style.border = "none";
 
-    // Mobile-Specific Code
-    const mobileCode = () => {
-      // Show the mobile button and add click functionality
-      mobileButton.style.display = "block"; // Ensure button is visible
-      mobileButton.addEventListener("click", () => {
-        const commands = [
-          "help - List available commands",
-          "about - About me",
-          "projects - My projects",
-          "contact - Contact information",
-          "clear - Clear the console",
+        // Enhance console visibility
+        consoleElement.style.padding = "10px";
+        outputElement.style.maxHeight = "70vh";
+
+        // Improve input experience
+        commandInput.style.fontSize = "16px"; // Prevent zoom on iOS
+        commandInput.style.width = "calc(100% - 70px)";
+      }
+
+      // Handle command execution
+      function handleCommand(command) {
+        const cmd = command.toLowerCase().trim();
+
+        // Append command to output
+        writeOutput(`> ${command}`);
+
+        switch (cmd) {
+          case "help":
+            writeOutput(
+              "Available commands: 'about', 'projects', 'contact', 'skills', 'experience', 'clear'"
+            );
+            break;
+          case "about":
+            writeOutput(
+              "About me: I am Tushar Kalra, a passionate web developer!"
+            );
+            break;
+          case "projects":
+            displayProjects();
+            break;
+          case "contact":
+            writeOutput("Contact: tusharkalra307@gmail.com");
+            break;
+          case "skills":
+            displaySkills();
+            break;
+          case "experience":
+            displayExperience();
+            break;
+          case "clear":
+            outputElement.innerHTML = "";
+            break;
+          default:
+            writeOutput(
+              `Unknown command: '${command}'. Type 'help' for available commands.`
+            );
+        }
+      }
+
+      // Utility functions
+      function writeOutput(text) {
+        const newLine = document.createElement("div");
+        newLine.textContent = text;
+        outputElement.appendChild(newLine);
+        outputElement.scrollTop = outputElement.scrollHeight;
+      }
+
+      function displayProjects() {
+        const projects = [
+          { title: "Chat Realm", description: "Real-time chat application" },
+          { title: "DNS Server", description: "Custom DNS implementation" },
+          { title: "KeepAnEye", description: "Website monitoring tool" },
         ];
 
-        const commandList = document.createElement("div");
-        commandList.style.padding = "10px";
-        commandList.style.background = "#111";
-        commandList.style.border = "1px solid #0f0";
-        commandList.style.marginTop = "10px";
+        const projectList = document.createElement("div");
+        projectList.className = "mobile-project-list";
 
-        commandList.innerHTML = commands.map((cmd) => `<p>${cmd}</p>`).join("");
-        outputElement.appendChild(commandList);
-        outputElement.scrollTop = outputElement.scrollHeight; // Auto-scroll to the bottom
+        projects.forEach((project) => {
+          const projectItem = document.createElement("div");
+          projectItem.className = "mobile-project-item";
+          projectItem.innerHTML = `
+          <h3>${project.title}</h3>
+          <p>${project.description}</p>
+        `;
+          projectList.appendChild(projectItem);
+        });
+
+        outputElement.appendChild(projectList);
+        outputElement.scrollTop = outputElement.scrollHeight;
+      }
+
+      function displaySkills() {
+        const skills = {
+          Backend: ["Node.js", "Express", "MongoDB"],
+          Frontend: ["HTML", "CSS", "JavaScript"],
+          DevOps: ["Docker", "Git", "CI/CD"],
+        };
+
+        const skillsList = document.createElement("div");
+        skillsList.className = "mobile-skills-list";
+
+        Object.entries(skills).forEach(([category, items]) => {
+          skillsList.innerHTML += `
+          <div class="skill-category">
+            <h3>${category}</h3>
+            <p>${items.join(", ")}</p>
+          </div>
+        `;
+        });
+
+        outputElement.appendChild(skillsList);
+        outputElement.scrollTop = outputElement.scrollHeight;
+      }
+
+      function displayExperience() {
+        const experience = [
+          {
+            role: "Backend Developer",
+            company: "Learn Kro Education",
+            period: "2024 - Present",
+            description:
+              "Led team of 3 developers, implemented microservices architecture",
+          },
+        ];
+
+        const expList = document.createElement("div");
+        expList.className = "mobile-experience-list";
+
+        experience.forEach((exp) => {
+          expList.innerHTML += `
+          <div class="experience-item">
+            <h3>${exp.role} at ${exp.company}</h3>
+            <p>${exp.period}</p>
+            <p>${exp.description}</p>
+          </div>
+        `;
+        });
+
+        outputElement.appendChild(expList);
+        outputElement.scrollTop = outputElement.scrollHeight;
+      }
+
+      // Event listeners
+      mobileButton.addEventListener("click", () => {
+        introSection.style.display = "none";
+        mainContainer.style.display = "flex";
+        consoleElement.style.display = "flex";
+        commandInput.style.display = "block";
+        initializeMobileUI();
+        writeOutput(
+          "Welcome to the portfolio console! Type 'help' for available commands."
+        );
       });
-    };
-  });
 
-  // Run mobile-specific code
-} else {
+      sendButton.addEventListener("click", () => {
+        const command = commandInput.value.trim();
+        if (command) {
+          handleCommand(command);
+          commandInput.value = "";
+        }
+      });
+
+      commandInput.addEventListener("keypress", (e) => {
+        if (e.key === "Enter") {
+          const command = commandInput.value.trim();
+          if (command) {
+            handleCommand(command);
+            commandInput.value = "";
+          }
+        }
+      });
+
+      // Initialize
+      initializeMobileUI();
+    });
+  } else {
   // DOM Elements
   const introDiv = document.getElementById("intro");
   const mainContainer = document.getElementById("main-container");

@@ -5,192 +5,354 @@ if (isMobile) {
   // Mobile device detection
   const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
-  
-    document.addEventListener("DOMContentLoaded", () => {
-      const introSection = document.getElementById("intro");
-      const mainContainer = document.getElementById("main-container");
-      const consoleElement = document.getElementById("console");
-      const commandInput = document.getElementById("command-input");
-      const outputElement = document.getElementById("output");
-      const mobileButton = document.getElementById("mobile-button");
-      const sendButton = document.getElementById("send-button");
+  document.addEventListener("DOMContentLoaded", () => {
+    const introSection = document.getElementById("intro");
+    const mainContainer = document.getElementById("main-container");
+    const consoleElement = document.getElementById("console");
+    const commandInput = document.getElementById("command-input");
+    const outputElement = document.getElementById("output");
+    const mobileButton = document.getElementById("mobile-button");
+    const sendButton = document.getElementById("send-button");
 
-      // Initialize mobile UI
-      function initializeMobileUI() {
-        mobileButton.style.display = "block";
-        sendButton.style.display = "block";
+    // Initialize mobile UI
+    function initializeMobileUI() {
+      mobileButton.style.display = "block";
+      sendButton.style.display = "block";
 
-        // Adjust layout for mobile
-        mainContainer.style.width = "100%";
-        mainContainer.style.height = "100%";
-        mainContainer.style.border = "none";
+      // Adjust layout for mobile
+      mainContainer.style.width = "100%";
+      mainContainer.style.height = "100%";
+      mainContainer.style.border = "none";
 
-        // Enhance console visibility
-        consoleElement.style.padding = "10px";
-        outputElement.style.maxHeight = "70vh";
+      // Enhance console visibility
+      consoleElement.style.padding = "10px";
+      outputElement.style.maxHeight = "70vh";
 
-        // Improve input experience
-        commandInput.style.fontSize = "16px"; // Prevent zoom on iOS
-        commandInput.style.width = "calc(100% - 70px)";
+      // Improve input experience
+      commandInput.style.fontSize = "16px"; // Prevent zoom on iOS
+      commandInput.style.width = "calc(100% - 70px)";
+    }
+    function handleCommand(command) {
+      const cmd = command.toLowerCase().trim();
+      writeOutput(`> ${command}`);
+
+      switch (cmd) {
+        case "help":
+          displayHelp();
+          break;
+        case "about":
+          displayAbout();
+          break;
+        case "projects":
+          displayProjects();
+          break;
+        case "contact":
+          displayContact();
+          break;
+        case "skills":
+          displaySkills();
+          break;
+        case "experience":
+          displayExperience();
+          break;
+        case "clear":
+          outputElement.innerHTML = "";
+          break;
+        default:
+          writeOutput(
+            `Unknown command: '${command}'. Type 'help' for commands.`
+          );
       }
+    }
 
-      // Handle command execution
-      function handleCommand(command) {
-        const cmd = command.toLowerCase().trim();
+    function displayHelp() {
+      const helpMenu = document.createElement("div");
+      helpMenu.className = "command-output help-menu";
+      helpMenu.innerHTML = `
+    <div class="command-section">
+      <h3>📋 Available Commands</h3>
+      <div class="command-grid">
+        <div class="command-item">
+          <span class="command-name">about</span>
+          <span class="command-desc">Professional summary</span>
+        </div>
+        <div class="command-item">
+          <span class="command-name">projects</span>
+          <span class="command-desc">View portfolio</span>
+        </div>
+        <div class="command-item">
+          <span class="command-name">skills</span>
+          <span class="command-desc">Technical expertise</span>
+        </div>
+        <div class="command-item">
+          <span class="command-name">experience</span>
+          <span class="command-desc">Work history</span>
+        </div>
+        <div class="command-item">
+          <span class="command-name">contact</span>
+          <span class="command-desc">Get in touch</span>
+        </div>
+        <div class="command-item">
+          <span class="command-name">clear</span>
+          <span class="command-desc">Clear console</span>
+        </div>
+      </div>
+    </div>
+  `;
+      outputElement.appendChild(helpMenu);
+    }
 
-        // Append command to output
-        writeOutput(`> ${command}`);
+    function displayAbout() {
+      const aboutSection = document.createElement("div");
+      aboutSection.className = "command-output about-section";
+      aboutSection.innerHTML = `
+    <div class="profile-header">
+      <h3>👨‍💻 Tushar Kalra</h3>
+      <span class="title">Backend Developer</span>
+    </div>
+    <div class="about-content">
+      <p>Passionate backend developer specializing in:</p>
+      <ul>
+        <li>Building scalable applications</li>
+        <li>API development</li>
+        <li>Performance optimization</li>
+        <li>Clean code practices</li>
+      </ul>
+    </div>
+  `;
+      outputElement.appendChild(aboutSection);
+    }
 
-        switch (cmd) {
-          case "help":
-            writeOutput(
-              "Available commands: 'about', 'projects', 'contact', 'skills', 'experience', 'clear'"
-            );
-            break;
-          case "about":
-            writeOutput(
-              "About me: I am Tushar Kalra, a passionate web developer!"
-            );
-            break;
-          case "projects":
-            displayProjects();
-            break;
-          case "contact":
-            writeOutput("Contact: tusharkalra307@gmail.com");
-            break;
-          case "skills":
-            displaySkills();
-            break;
-          case "experience":
-            displayExperience();
-            break;
-          case "clear":
-            outputElement.innerHTML = "";
-            break;
-          default:
-            writeOutput(
-              `Unknown command: '${command}'. Type 'help' for available commands.`
-            );
-        }
-      }
+    function displayProjects() {
+      const projects = [
+        {
+          title: "Chat Realm",
+          description: "Real-time chat with end-to-end encryption",
+          tech: "Node.js, Socket.io, MongoDB",
+          status: "In Development",
+        },
+        {
+          title: "DNS Server",
+          description: "Custom DNS implementation with caching",
+          tech: "Node.js, UDP",
+          status: "Completed",
+        },
+        {
+          title: "KeepAnEye",
+          description: "Website uptime monitoring tool",
+          tech: "Node.js, Express, MongoDB",
+          status: "Active",
+        },
+      ];
 
-      // Utility functions
-      function writeOutput(text) {
-        const newLine = document.createElement("div");
-        newLine.textContent = text;
-        outputElement.appendChild(newLine);
-        outputElement.scrollTop = outputElement.scrollHeight;
-      }
+      const projectsSection = document.createElement("div");
+      projectsSection.className = "command-output projects-section";
+      projectsSection.innerHTML = `
+    <h3>🚀 Projects</h3>
+    <div class="projects-grid">
+      ${projects
+        .map(
+          (project) => `
+        <div class="project-card">
+          <h4>${project.title}</h4>
+          <p class="project-desc">${project.description}</p>
+          <div class="project-tech">${project.tech}</div>
+          <span class="project-status ${project.status.toLowerCase()}">${
+            project.status
+          }</span>
+        </div>
+      `
+        )
+        .join("")}
+    </div>
+  `;
+      outputElement.appendChild(projectsSection);
+    }
 
-      function displayProjects() {
-        const projects = [
-          { title: "Chat Realm", description: "Real-time chat application" },
-          { title: "DNS Server", description: "Custom DNS implementation" },
-          { title: "KeepAnEye", description: "Website monitoring tool" },
-        ];
+    function displaySkills() {
+      const skills = {
+        Backend: ["Node.js", "Express", "MongoDB", "Redis", "Socket.io"],
+        Frontend: ["HTML", "CSS", "JavaScript", "React"],
+        DevOps: ["Docker", "Git", "CI/CD", "Nginx"],
+      };
 
-        const projectList = document.createElement("div");
-        projectList.className = "mobile-project-list";
+      const skillsSection = document.createElement("div");
+      skillsSection.className = "command-output skills-section";
+      skillsSection.innerHTML = `
+    <h3>💻 Technical Skills</h3>
+    <div class="skills-grid">
+      ${Object.entries(skills)
+        .map(
+          ([category, items]) => `
+        <div class="skill-category">
+          <h4>${category}</h4>
+          <div class="skill-items">
+            ${items
+              .map((skill) => `<span class="skill-tag">${skill}</span>`)
+              .join("")}
+          </div>
+        </div>
+      `
+        )
+        .join("")}
+    </div>
+  `;
+      outputElement.appendChild(skillsSection);
+    }
 
-        projects.forEach((project) => {
-          const projectItem = document.createElement("div");
-          projectItem.className = "mobile-project-item";
-          projectItem.innerHTML = `
+    function displayExperience() {
+      const experience = [
+        {
+          role: "Backend Developer",
+          company: "Learn Kro Education",
+          period: "2024 - Present",
+          highlights: [
+            "Led team of 3 developers",
+            "Implemented microservices architecture",
+            "Developed monitoring system",
+            "Automated Excel data transfer",
+          ],
+        },
+      ];
+
+      const expSection = document.createElement("div");
+      expSection.className = "command-output experience-section";
+      expSection.innerHTML = `
+    <h3>💼 Work Experience</h3>
+    ${experience
+      .map(
+        (exp) => `
+      <div class="experience-card">
+        <div class="exp-header">
+          <h4>${exp.role}</h4>
+          <span class="company">${exp.company}</span>
+          <span class="period">${exp.period}</span>
+        </div>
+        <ul class="highlights">
+          ${exp.highlights.map((highlight) => `<li>${highlight}</li>`).join("")}
+        </ul>
+      </div>
+    `
+      )
+      .join("")}
+  `;
+      outputElement.appendChild(expSection);
+    }
+
+    function displayContact() {
+      const contactSection = document.createElement("div");
+      contactSection.className = "command-output contact-section";
+      contactSection.innerHTML = `
+    <h3>📱 Contact Information</h3>
+    <div class="contact-grid">
+      <a href="mailto:tusharkalra307@gmail.com" class="contact-item">
+        <span class="icon">📧</span>
+        <span class="label">Email</span>
+      </a>
+      <a href="https://github.com/Tushar-programador" class="contact-item">
+        <span class="icon">💻</span>
+        <span class="label">GitHub</span>
+      </a>
+      <a href="https://www.linkedin.com/in/tushar-kalra-developer/" class="contact-item">
+        <span class="icon">👥</span>
+        <span class="label">LinkedIn</span>
+      </a>
+    </div>
+  `;
+      outputElement.appendChild(contactSection);
+    }
+
+    // Utility functions
+    function writeOutput(text) {
+      const newLine = document.createElement("div");
+      newLine.textContent = text;
+      outputElement.appendChild(newLine);
+      outputElement.scrollTop = outputElement.scrollHeight;
+    }
+
+    function displayProjects() {
+      const projects = [
+        { title: "Chat Realm", description: "Real-time chat application" },
+        { title: "DNS Server", description: "Custom DNS implementation" },
+        { title: "KeepAnEye", description: "Website monitoring tool" },
+      ];
+
+      const projectList = document.createElement("div");
+      projectList.className = "mobile-project-list";
+
+      projects.forEach((project) => {
+        const projectItem = document.createElement("div");
+        projectItem.className = "mobile-project-item";
+        projectItem.innerHTML = `
           <h3>${project.title}</h3>
           <p>${project.description}</p>
         `;
-          projectList.appendChild(projectItem);
-        });
+        projectList.appendChild(projectItem);
+      });
 
-        outputElement.appendChild(projectList);
-        outputElement.scrollTop = outputElement.scrollHeight;
-      }
+      outputElement.appendChild(projectList);
+      outputElement.scrollTop = outputElement.scrollHeight;
+    }
 
-      function displaySkills() {
-        const skills = {
-          Backend: ["Node.js", "Express", "MongoDB"],
-          Frontend: ["HTML", "CSS", "JavaScript"],
-          DevOps: ["Docker", "Git", "CI/CD"],
-        };
+  
+      const skillsList = document.createElement("div");
+      skillsList.className = "mobile-skills-list";
 
-        const skillsList = document.createElement("div");
-        skillsList.className = "mobile-skills-list";
-
-        Object.entries(skills).forEach(([category, items]) => {
-          skillsList.innerHTML += `
+      Object.entries(skills).forEach(([category, items]) => {
+        skillsList.innerHTML += `
           <div class="skill-category">
             <h3>${category}</h3>
             <p>${items.join(", ")}</p>
           </div>
         `;
-        });
+      });
 
-        outputElement.appendChild(skillsList);
-        outputElement.scrollTop = outputElement.scrollHeight;
-      }
+      outputElement.appendChild(skillsList);
+      outputElement.scrollTop = outputElement.scrollHeight;
+    
 
-      function displayExperience() {
-        const experience = [
-          {
-            role: "Backend Developer",
-            company: "Learn Kro Education",
-            period: "2024 - Present",
-            description:
-              "Led team of 3 developers, implemented microservices architecture",
-          },
-        ];
 
-        const expList = document.createElement("div");
-        expList.className = "mobile-experience-list";
+      const expList = document.createElement("div");
+      expList.className = "mobile-experience-list";
 
-        experience.forEach((exp) => {
-          expList.innerHTML += `
+      experience.forEach((exp) => {
+        expList.innerHTML += `
           <div class="experience-item">
             <h3>${exp.role} at ${exp.company}</h3>
             <p>${exp.period}</p>
             <p>${exp.description}</p>
           </div>
         `;
-        });
-
-        outputElement.appendChild(expList);
-        outputElement.scrollTop = outputElement.scrollHeight;
-      }
-
-      // Event listeners
-      mobileButton.addEventListener("click", () => {
-        introSection.style.display = "none";
-        mainContainer.style.display = "flex";
-        consoleElement.style.display = "flex";
-        commandInput.style.display = "block";
-        initializeMobileUI();
-        writeOutput(
-          "Welcome to the portfolio console! Type 'help' for available commands."
-        );
       });
 
-      sendButton.addEventListener("click", () => {
-        const command = commandInput.value.trim();
-        if (command) {
-          handleCommand(command);
-          commandInput.value = "";
-        }
-      });
+      outputElement.appendChild(expList);
+      outputElement.scrollTop = outputElement.scrollHeight;
+    
 
-      commandInput.addEventListener("keypress", (e) => {
-        if (e.key === "Enter") {
-          const command = commandInput.value.trim();
-          if (command) {
-            handleCommand(command);
-            commandInput.value = "";
-          }
-        }
-      });
-
-      // Initialize
+    // Event listeners
+    mobileButton.addEventListener("click", () => {
+      introSection.style.display = "none";
+      mainContainer.style.display = "flex";
+      consoleElement.style.display = "flex";
+      commandInput.style.display = "block";
       initializeMobileUI();
+      writeOutput(
+        "Welcome to the portfolio console! Type 'help' for available commands."
+      );
     });
-  } else {
+
+    sendButton.addEventListener("click", () => {
+      const command = commandInput.value.trim();
+      if (command) {
+        handleCommand(command);
+        commandInput.value = "";
+      }
+    });
+
+    // Initialize
+    initializeMobileUI();
+  });
+} else {
   // DOM Elements
   const introDiv = document.getElementById("intro");
   const mainContainer = document.getElementById("main-container");

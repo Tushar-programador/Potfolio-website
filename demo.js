@@ -6,11 +6,18 @@ if (isMobile) {
     const introSection = document.getElementById("intro");
     const mainContainer = document.getElementById("main-container");
     const consoleElement = document.getElementById("console");
-    const enterButton = document.getElementById("enter-button");
     const commandInput = document.getElementById("command-input");
     const outputElement = document.getElementById("output");
     const mobileButton = document.getElementById("mobile-button");
+    const sendButton = document.getElementById("send-button");
 
+    sendButton.addEventListener("click", () => {
+      const command = commandInput.value.trim();
+      if (command) {
+        handleCommand(command);
+        commandInput.value = ""; // Clear input after sending
+      }
+    });
     // Utility function to write output in the console
     const writeOutput = (text) => {
       const newLine = document.createElement("div");
@@ -30,6 +37,14 @@ if (isMobile) {
         "Welcome to the portfolio console! Type 'help' for a list of commands."
       );
     };
+    sendButton.addEventListener("click", () => {
+      const command = commandInput.value.trim();
+      if (command) {
+        handleCommand(command);
+        commandInput.value = ""; // Clear input after sending
+      }
+    });
+    mobileCode();
 
     // Function to handle user commands (common for both)
     const handleCommand = (command) => {
@@ -64,7 +79,6 @@ if (isMobile) {
         enterSite();
       }
     });
-    mobileCode();
 
     // Mobile-Specific Code
     const mobileCode = () => {
@@ -102,7 +116,7 @@ if (isMobile) {
   const inputField = document.getElementById("command-input");
 
   // ASCII Art Constants
-  
+
   const ASCII_LOGO = `
      _____           _                _  __     _           
     |_   _|   _ ___| |__   __ _ _ __| |/ /__ _| |_ __ __ _ 

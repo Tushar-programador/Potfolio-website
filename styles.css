@@ -174,6 +174,9 @@ padding: 1rem;
 }
 
 /* Responsive Design */
+.mobile-device-only{
+  display: none; /* Hidden by default for larger screens */
+}
 @media (max-width: 768px) {
   #main-container {
     flex-direction: column;
@@ -189,5 +192,21 @@ padding: 1rem;
    .mobile-only {
     display: block; /* Visible only on small screens */
   }
+  .mobile-device-only {
+    display: inline-block; /* Visible on mobile devices */
+    padding: 5px 10px;
+    margin-left: 10px;
+    background-color: #0f0;
+    color: #000;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    border-radius: 5px;
+  }
+
+  #command-input {
+    width: calc(100% - 70px); /* Adjust input width to accommodate button */
+  }
 }
+
 

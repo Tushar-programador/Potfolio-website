@@ -25,7 +25,7 @@ if (isMobile) {
       outputElement.style.maxHeight = "70vh";
 
       // Improve input experience
-      commandInput.style.fontSize = "16px"; 
+      commandInput.style.fontSize = "16px";
       commandInput.style.width = "calc(100% - 70px)";
     }
     function handleCommand(command) {
@@ -126,6 +126,12 @@ if (isMobile) {
           description: "Real-time chat with end-to-end encryption",
           tech: "Node.js, Socket.io, MongoDB",
           status: "In Development",
+        },
+        {
+          title: "Twitter Backend",
+          description: "REST API for Twitter-like application",
+          tech: "Node.js, Express, MongoDB",
+          status: "Completed",
         },
         {
           title: "DNS Server",
@@ -266,31 +272,6 @@ if (isMobile) {
       outputElement.scrollTop = outputElement.scrollHeight;
     }
 
-    function displayProjects() {
-      const projects = [
-        { title: "Chat Realm", description: "Real-time chat application" },
-        { title: "DNS Server", description: "Custom DNS implementation" },
-        { title: "KeepAnEye", description: "Website monitoring tool" },
-        { title: "Twitter Backend", description: "Twitter Backend clone" },
-      ];
-
-      const projectList = document.createElement("div");
-      projectList.className = "mobile-project-list";
-
-      projects.forEach((project) => {
-        const projectItem = document.createElement("div");
-        projectItem.className = "mobile-project-item";
-        projectItem.innerHTML = `
-          <h3>${project.title}</h3>
-          <p>${project.description}</p>
-        `;
-        projectList.appendChild(projectItem);
-      });
-
-      outputElement.appendChild(projectList);
-      outputElement.scrollTop = outputElement.scrollHeight;
-    }
-
     const skillsList = document.createElement("div");
     skillsList.className = "mobile-skills-list";
 
@@ -323,6 +304,16 @@ if (isMobile) {
     outputElement.scrollTop = outputElement.scrollHeight;
 
     // Event listeners
+    mobileButton.addEventListener("touchstart", () => {
+      introSection.style.display = "none";
+      mainContainer.style.display = "flex";
+      consoleElement.style.display = "flex";
+      commandInput.style.display = "block";
+      initializeMobileUI();
+      writeOutput(
+        "Welcome to the portfolio console! Type 'help' for available commands."
+      );
+    });
     mobileButton.addEventListener("click", () => {
       introSection.style.display = "none";
       mainContainer.style.display = "flex";
@@ -341,7 +332,6 @@ if (isMobile) {
         commandInput.value = "";
       }
     });
-
   });
 } else {
   // DOM Elements

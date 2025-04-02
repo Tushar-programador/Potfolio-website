@@ -730,28 +730,27 @@ LinkedIn: https://www.linkedin.com/in/tushar-kalra-developer/`
         isMatrixRunning = !isMatrixRunning;
         break;
       case "resume":
- async function downloadPDF(pdfUrl, filename) {
-    try {
-        const response = await fetch(pdfUrl, { mode: "cors" }); // Ensure CORS compatibility
-        if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
-
-        const blob = await response.blob();
-        const link = document.createElement("a");
-        link.href = URL.createObjectURL(blob);
-        link.download = filename || "resume.pdf";
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        URL.revokeObjectURL(link.href);
-    } catch (error) {
-        console.error("Failed to download PDF:", error);
+    async function downloadImage(imageUrl, filename) {
+        try {
+            const response = await fetch(imageUrl, { mode: 'cors' });
+            const blob = await response.blob();
+            const link = document.createElement("a");
+            link.href = URL.createObjectURL(blob);
+            link.download = filename || "downloaded-image.jpg";
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(link.href);
+        } catch (error) {
+            console.error("Error downloading image:", error);
+        }
     }
-}
 
-// Example usage:
-downloadPDF("https://res.cloudinary.com/tusharkalra/image/upload/v1743617123/resume_m74wdt.pdf", "TusharKalra_Resume.pdf");
+    // Example usage
+    downloadImage("https://res.cloudinary.com/tusharkalra/image/upload/v1743617204/resume_m74wdt_sevb8k.jpg", "TusharKalra_Resume.jpg");
 
     break;
+
       case "experience":
         await showExperience();
         break;

@@ -731,7 +731,16 @@ LinkedIn: https://www.linkedin.com/in/tushar-kalra-developer/`
         break;
       case "resume":
         await appendOutputWithTyping("Downloading resume...\n");
-        // Add resume download logic here
+        const response = await fetch("https://res.cloudinary.com/tusharkalra/image/upload/v1743617204/resume_m74wdt_sevb8k.jpg");
+    const blob = await response.blob();
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = filename || "image.jpg";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(link.href);
+
         break;
       case "experience":
         await showExperience();

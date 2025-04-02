@@ -205,14 +205,14 @@ if (isMobile) {
     function displayExperience() {
       const experience = [
         {
-          role: "Backend Developer",
-          company: "Learn Kro Education",
-          period: "2024 - Present",
+          role: "Javascript Developer",
+          company: "Vervebot.io",
+          period: "Feb 2025 - Present",
           highlights: [
-            "Led team of 3 developers",
-            "Implemented microservices architecture",
-            "Developed monitoring system",
-            "Automated Excel data transfer",
+            "Responsible for managing code efficiency",
+            "Work with different Tech Stack",
+            "Develop new feature in ICMS",
+            "Maintain the POS software",
           ],
         },
       ];

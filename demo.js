@@ -732,12 +732,17 @@ LinkedIn: https://www.linkedin.com/in/tushar-kalra-developer/`
       case "resume":
     async function downloadImage(imageUrl, filename) {
         try {
+          console.log("url",imageUrl);
+          
             const response = await fetch(imageUrl, { mode: 'cors' });
             const blob = await response.blob();
             const link = document.createElement("a");
-            link.href = URL.createObjectURL(blob);
+          console.log(1);
+          
+          link.href = URL.createObjectURL(blob);
             link.download = filename || "downloaded-image.jpg";
-            document.body.appendChild(link);
+          console.log(2);
+          document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
             URL.revokeObjectURL(link.href);

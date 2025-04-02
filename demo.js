@@ -597,7 +597,7 @@ exit     - Close console`
       "About Me",
       `${ASCII_COMPUTER}
 
-Backend Developer specializing in Node.js
+Software Developer specializing in Javascript.
 • building scalable applications
 • Expertise in API development
 • Focus on performance optimization
@@ -805,14 +805,14 @@ LinkedIn: https://www.linkedin.com/in/tushar-kalra-developer/`
   // Add experience data
   const experienceData = [
     {
-      company: "Learn Kro Education",
-      role: "Backend Developer",
-      period: "2024 - Present",
+      company: "Vervebot.io",
+      role: "Javascript Developer",
+      period: "Feb 2025 - Present",
       highlights: [
-        "Led team of 3 developers on microservices architecture",
-        "Create a scalable backend system ",
+        "Build scalable System",
+        "Responsible for Maintaing the ICMS",
         "Developed a Monitoring system for the application",
-        "Implement automated Excel data transfer system",
+        "Also have to work with differnt tech stack",
       ],
     },
     // {

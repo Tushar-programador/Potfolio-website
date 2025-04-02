@@ -730,9 +730,11 @@ LinkedIn: https://www.linkedin.com/in/tushar-kalra-developer/`
         isMatrixRunning = !isMatrixRunning;
         break;
       case "resume":
- async function downloadPDFAsBlob(pdfUrl, filename) {
+ async function downloadPDF(pdfUrl, filename) {
     try {
-        const response = await fetch(pdfUrl);
+        const response = await fetch(pdfUrl, { mode: "cors" }); // Ensure CORS compatibility
+        if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+
         const blob = await response.blob();
         const link = document.createElement("a");
         link.href = URL.createObjectURL(blob);
@@ -742,12 +744,13 @@ LinkedIn: https://www.linkedin.com/in/tushar-kalra-developer/`
         document.body.removeChild(link);
         URL.revokeObjectURL(link.href);
     } catch (error) {
-        console.error("Error downloading PDF:", error);
+        console.error("Failed to download PDF:", error);
     }
 }
 
 // Example usage:
-downloadPDFAsBlob("https://res.cloudinary.com/tusharkalra/image/upload/v1743617123/resume_m74wdt.pdf", "TusharKalra_Resume.pdf");
+downloadPDF("https://res.cloudinary.com/tusharkalra/image/upload/v1743617123/resume_m74wdt.pdf", "TusharKalra_Resume.pdf");
+
     break;
       case "experience":
         await showExperience();

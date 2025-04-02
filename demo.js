@@ -730,19 +730,26 @@ LinkedIn: https://www.linkedin.com/in/tushar-kalra-developer/`
         isMatrixRunning = !isMatrixRunning;
         break;
       case "resume":
-   function downloadImage(imageUrl, filename) {
-    const link = document.createElement("a");
-    link.href = imageUrl;
-    link.download = filename || "downloaded-image.jpg";
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-}
+    async function downloadImage(imageUrl, filename) {
+        try {
+            const response = await fetch(imageUrl, { mode: 'cors' });
+            const blob = await response.blob();
+            const link = document.createElement("a");
+            link.href = URL.createObjectURL(blob);
+            link.download = filename || "downloaded-image.jpg";
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(link.href);
+        } catch (error) {
+            console.error("Error downloading image:", error);
+        }
+    }
 
-// Example usage:
-downloadImage("https://res.cloudinary.com/tusharkalra/image/upload/v1743617204/resume_m74wdt_sevb8k.jpg", "TusharKalra_Resume.jpg");
+    // Example usage
+    downloadImage("https://res.cloudinary.com/tusharkalra/image/upload/v1743617204/resume_m74wdt_sevb8k.jpg", "TusharKalra_Resume.jpg");
 
-        break;
+    break;
       case "experience":
         await showExperience();
         break;

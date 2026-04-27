@@ -54,6 +54,21 @@ if (isMobile) {
         case "clear":
           outputElement.innerHTML = "";
           break;
+        case "joke":
+          displayJoke();
+          break;
+        case "quote":
+          displayQuote();
+          break;
+        case "stats":
+          displayStats();
+          break;
+        case "time":
+          displayTime();
+          break;
+        // case "game":
+        //   startGuessGame();
+          break;
         default:
           writeOutput(
             `Unknown command: '${command}'. Type 'help' for commands.`
@@ -91,6 +106,26 @@ if (isMobile) {
         <div class="command-item">
           <span class="command-name">clear</span>
           <span class="command-desc">Clear console</span>
+        </div>
+        <div class="command-item">
+          <span class="command-name">joke</span>
+          <span class="command-desc">Tell a dev joke</span>
+        </div>
+        <div class="command-item">
+          <span class="command-name">quote</span>
+          <span class="command-desc">Dev quote</span>
+        </div>
+        <div class="command-item">
+          <span class="command-name">stats</span>
+          <span class="command-desc">Portfolio stats</span>
+        </div>
+        <div class="command-item">
+          <span class="command-name">time</span>
+          <span class="command-desc">Current time</span>
+        </div>
+        <div class="command-item">
+          <span class="command-name">game</span>
+          <span class="command-desc">Guess the number</span>
         </div>
       </div>
     </div>
@@ -262,6 +297,99 @@ if (isMobile) {
     </div>
   `;
       outputElement.appendChild(contactSection);
+    }
+
+    function displayJoke() {
+      const jokes = [
+        "Why do programmers prefer dark mode? Because light attracts bugs! 🐛",
+        "How many programmers does it take to change a light bulb? None, that's a hardware problem! 💡",
+        "Why do Java developers wear glasses? Because they don't C#! 👓",
+        "Why did the developer go broke? Because he lost his cache! 💸",
+        "How many programmers does it take to change a light bulb? None, they just make darkness the new standard! 🌑"
+      ];
+      const randomJoke = jokes[Math.floor(Math.random() * jokes.length)];
+      const jokeDiv = document.createElement("div");
+      jokeDiv.className = "command-output";
+      jokeDiv.innerHTML = `<h3>😂 Dev Joke</h3><p>${randomJoke}</p>`;
+      outputElement.appendChild(jokeDiv);
+    }
+
+    function displayQuote() {
+      const quotes = [
+        "Code is poetry written in a language computers understand. - Anonymous",
+        "The only way to learn a new programming language is by writing programs in it. - Dennis Ritchie",
+        "Make it work, make it right, make it fast. - Kent Beck",
+        "A great lathe operator commands several times the wage of an average lathe operator. - Bill Gates",
+        "Debugging is twice as hard as writing the code. - Brian Kernighan"
+      ];
+      const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+      const quoteDiv = document.createElement("div");
+      quoteDiv.className = "command-output";
+      quoteDiv.innerHTML = `<h3>💭 Dev Quote</h3><p><em>"${randomQuote}"</em></p>`;
+      outputElement.appendChild(quoteDiv);
+    }
+
+    function displayStats() {
+      const statsDiv = document.createElement("div");
+      statsDiv.className = "command-output";
+      statsDiv.innerHTML = `
+        <h3>📊 Portfolio Stats</h3>
+        <div style="margin-top: 10px;">
+          <p>🚀 Projects: 3</p>
+          <p>💻 Skills: 12+</p>
+          <p>⭐ Experience: 2+ years</p>
+          <p>📚 Technologies: Node.js, React, MongoDB, Docker</p>
+          <p>🎯 Success Rate: 100%</p>
+        </div>
+      `;
+      outputElement.appendChild(statsDiv);
+    }
+
+    function displayTime() {
+      const now = new Date();
+      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' };
+      const timeString = now.toLocaleDateString('en-US', options);
+      const timeDiv = document.createElement("div");
+      timeDiv.className = "command-output";
+      timeDiv.innerHTML = `<h3>⏰ Current Time</h3><p>${timeString}</p><p>Timezone: IST (UTC+5:30)</p>`;
+      outputElement.appendChild(timeDiv);
+    }
+
+    function startGuessGame() {
+      const gameDiv = document.createElement("div");
+      gameDiv.className = "command-output";
+      const secretNumber = Math.floor(Math.random() * 100) + 1;
+      gameDiv.innerHTML = `
+        <h3>🎮 Guess the Number Game</h3>
+        <p>I'm thinking of a number between 1 and 100...</p>
+        <input type="number" id="guess-input" placeholder="Enter your guess" min="1" max="100" style="padding: 5px; margin: 5px 0;">
+        <button id="guess-btn" style="padding: 5px 10px; margin-left: 5px; background: #0f0; color: #000; border: none; cursor: pointer; border-radius: 3px;">Guess</button>
+        <div id="game-feedback"></div>
+      `;
+      outputElement.appendChild(gameDiv);
+
+      let attempts = 0;
+      const guessBtn = document.getElementById("guess-btn");
+      const feedbackDiv = document.getElementById("game-feedback");
+
+      guessBtn.addEventListener("click", () => {
+        const guess = parseInt(document.getElementById("guess-input").value);
+        attempts++;
+
+        if (isNaN(guess)) {
+          feedbackDiv.innerHTML = "<p style='color: #ff0;'>❌ Please enter a valid number</p>";
+          return;
+        }
+
+        if (guess === secretNumber) {
+          feedbackDiv.innerHTML = `<p style='color: #0f0;'>🎉 Correct! You got it in ${attempts} attempts!</p>`;
+          guessBtn.disabled = true;
+        } else if (guess < secretNumber) {
+          feedbackDiv.innerHTML = `<p style='color: #0af;'>⬆️ Too low! Try again (Attempt ${attempts})</p>`;
+        } else {
+          feedbackDiv.innerHTML = `<p style='color: #0af;'>⬇️ Too high! Try again (Attempt ${attempts})</p>`;
+        }
+      });
     }
 
     // Utility functions
@@ -587,6 +715,10 @@ skills   - List technical skills
 projects - Browse my portfolio
 ascii    - Show some cool ASCII art
 matrix   - Toggle matrix rain effect
+joke     - Tell a dev joke
+quote    - Dev inspiration quote
+stats    - Portfolio statistics
+time     - Current date & time
 clear    - Clear console
 contact  - Show contact information
 resume   - Download my resume
@@ -743,6 +875,21 @@ LinkedIn: https://www.linkedin.com/in/tushar-kalra-developer/`
       case "experience":
         await showExperience();
         break;
+      case "joke":
+        await displayJoke();
+        break;
+      case "quote":
+        await displayQuote();
+        break;
+      case "stats":
+        await displayStats();
+        break;
+      case "time":
+        await displayTime();
+        break;
+      // case "game":
+      //   await startGuessGame();
+      //   break;
       case "exit":
       case "quit":
         await appendOutputWithTyping("Goodbye! Press F5 to restart.\n");
@@ -994,5 +1141,79 @@ ${exp.highlights.map((h) => `• ${h}`).join("\n")}`
     if (needsUpdate) {
       outputDiv.innerHTML = showSkillCategories();
     }
+  }
+
+  // New interactive commands for desktop
+  async function displayJoke() {
+    const jokes = [
+      "Why do programmers prefer dark mode? Because light attracts bugs! 🐛",
+      "How many programmers does it take to change a light bulb? None, that's a hardware problem! 💡",
+      "Why do Java developers wear glasses? Because they don't C#! 👓",
+      "Why did the developer go broke? Because he lost his cache! 💸",
+      "How many programmers does it take to change a light bulb? None, they just make darkness the new standard! 🌑"
+    ];
+    const randomJoke = jokes[Math.floor(Math.random() * jokes.length)];
+    await appendOutputWithTyping(`\n😂 Dev Joke:\n${randomJoke}\n`);
+  }
+
+  async function displayQuote() {
+    const quotes = [
+      "Code is poetry written in a language computers understand. - Anonymous",
+      "The only way to learn a new programming language is by writing programs in it. - Dennis Ritchie",
+      "Make it work, make it right, make it fast. - Kent Beck",
+      "A great lathe operator commands several times the wage of an average lathe operator. - Bill Gates",
+      "Debugging is twice as hard as writing the code. - Brian Kernighan"
+    ];
+    const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+    await appendOutputWithTyping(`\n💬 Dev Quote:\n"${randomQuote}"\n`);
+  }
+
+  async function displayStats() {
+    const stats = `
+📊 Portfolio Statistics:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🚀 Projects Completed: 3
+💻 Technical Skills: 12+
+⭐ Experience: 2+ years
+🔧 Technologies: Node.js, React, MongoDB, Docker
+📈 Success Rate: 100%
+🎯 Current Focus: Full Stack Development
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+`;
+    await appendOutputWithTyping(stats);
+  }
+
+  async function displayTime() {
+    const now = new Date();
+    const options = { 
+      weekday: 'long', 
+      year: 'numeric', 
+      month: 'long', 
+      day: 'numeric', 
+      hour: '2-digit', 
+      minute: '2-digit', 
+      second: '2-digit' 
+    };
+    const timeString = now.toLocaleDateString('en-US', options);
+    const timeDisplay = `
+⏰ Current Date & Time:
+${timeString}
+Timezone: IST (UTC+5:30)
+Location: Gurugram, India 📍
+`;
+    await appendOutputWithTyping(timeDisplay);
+  }
+
+  async function startGuessGame() {
+    const secretNumber = Math.floor(Math.random() * 100) + 1;
+    let attempts = 0;
+    let guessing = true;
+    
+    await appendOutputWithTyping("\n🎮 Guess the Number Game!\n");
+    await appendOutputWithTyping("I'm thinking of a number between 1 and 100...\n");
+    await appendOutputWithTyping("Type your guesses:\n");
+    
+    // Store the game state globally for the input handler
+    window.guessGameState = { secretNumber, attempts, guessing };
   }
 }

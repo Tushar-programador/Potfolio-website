@@ -395,3 +395,42 @@ body {
     grid-template-columns: repeat(2, 1fr);
   }
 }
+
+/* Interactive Command Styles */
+.game-input {
+  padding: 8px;
+  background: #111;
+  border: 1px solid var(--text-color);
+  color: var(--text-color);
+  margin: 10px 0;
+  font-family: inherit;
+  border-radius: 4px;
+}
+
+.game-btn {
+  padding: 8px 16px;
+  background: var(--text-color);
+  color: var(--bg-color);
+  border: none;
+  cursor: pointer;
+  margin-left: 10px;
+  border-radius: 4px;
+  font-family: inherit;
+  font-weight: bold;
+  transition: background 0.2s;
+}
+
+.game-btn:hover {
+  background: var(--hover-color);
+}
+
+.joke-section,
+.quote-section,
+.stats-section,
+.time-section {
+  padding: 15px;
+  background: #111;
+  border-radius: 6px;
+  border-left: 3px solid var(--text-color);
+  margin: 10px 0;
+}

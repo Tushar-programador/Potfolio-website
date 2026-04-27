@@ -730,26 +730,15 @@ LinkedIn: https://www.linkedin.com/in/tushar-kalra-developer/`
         isMatrixRunning = !isMatrixRunning;
         break;
       case "resume":
-    async function downloadImage(imageUrl, filename) {
-        try {
-            const response = await fetch(imageUrl, { mode: 'cors' });
-            const blob = await response.blob();
-            const link = document.createElement("a");
-            link.href = URL.createObjectURL(blob);
-            link.download = filename || "downloaded-image.jpg";
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            URL.revokeObjectURL(link.href);
-        } catch (error) {
-            console.error("Error downloading image:", error);
-        }
-    }
-
-    // Example usage
-    downloadImage("https://res.cloudinary.com/tusharkalra/image/upload/v1743617204/resume_m74wdt_sevb8k.jpg", "TusharKalra_Resume.jpg");
-
-    break;
+        await appendOutputWithTyping("📄 Downloading your resume...\n");
+        const pdfLink = document.createElement("a");
+        pdfLink.href = "Tushar_Kalra_25May26.pdf";
+        pdfLink.download = "Tushar_Kalra_Resume.pdf";
+        document.body.appendChild(pdfLink);
+        pdfLink.click();
+        document.body.removeChild(pdfLink);
+        await appendOutputWithTyping("✅ Resume downloaded successfully!\n");
+        break;
 
       case "experience":
         await showExperience();

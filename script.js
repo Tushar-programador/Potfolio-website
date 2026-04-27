@@ -375,8 +375,14 @@ async function handleCommand(command) {
       break;
 
     case "resume":
-      await appendOutputWithTyping("Downloading resume...\n");
-      // Add resume download logic here
+      await appendOutputWithTyping("📄 Downloading your resume...\n");
+      const pdfLink = document.createElement("a");
+      pdfLink.href = "Tushar_Kalra_25May26.pdf";
+      pdfLink.download = "Tushar_Kalra_Resume.pdf";
+      document.body.appendChild(pdfLink);
+      pdfLink.click();
+      document.body.removeChild(pdfLink);
+      await appendOutputWithTyping("✅ Resume downloaded successfully!\n");
       break;
     case "experience":
       await showExperience();
